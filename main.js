@@ -214,10 +214,10 @@
       'nav.process': 'Prozess',
       'nav.contact': 'Kontakt',
 
-      'hero.status': 'Verfügbar für Engagements · Q3 2026',
+      'hero.status': 'Verfügbar ab Juli 2026 · Q3-Slots offen',
       'hero.title1': 'Offensive Security.',
-      'hero.title2': 'Strukturiert. Belastbar.',
-      'hero.sub': 'Penetration Testing, Bug Bounty Research und OT/ICS-Security — mit Reports, die der Vorstand versteht und das Engineering umsetzen kann.',
+      'hero.title2': 'Ich finde, was Scanner übersehen.',
+      'hero.sub': '20+ verifizierte Findings über HackerOne & Bugcrowd · Bug Bounty seit 2020. Manuelle Pentests für Web, Active Directory und OT/ICS — mit Reports, die der Vorstand versteht und das Engineering umsetzen kann.',
       'hero.cta1': 'Engagement anfragen',
       'hero.cta2': 'Sample Finding ansehen',
 
@@ -290,10 +290,10 @@
 
       'about.kicker': '// ÜBER',
       'about.title': 'Josef Roland Basner',
-      'about.p1': 'Penetration Tester und Security Researcher mit Schwerpunkt auf OT/ICS-Umgebungen und Web-Application-Security. Seit 2020 Bug-Bounty-Hunter mit triagierten Findings auf öffentlichen Programmen.',
+      'about.p1': 'Penetration Tester und Security Researcher mit Schwerpunkt auf Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv — 20+ verifizierte Findings auf öffentlichen Programmen, Schwerpunkt Business-Logic-Flaws und Exploit-Chains.',
       'about.p2': 'Hintergrund aus dem industriellen Umfeld — ich verstehe, dass eine SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.',
       'about.stat1': 'IT-Berufshaftpflicht inkl. Hacker-Klausel',
-      'about.stat2': 'Bug-Bounty-Hunter seit',
+      'about.stat2': 'Verifizierte Findings auf H1 & Bugcrowd',
       'about.stat3': 'Standort Anklam · vor Ort & remote',
 
       'contact.kicker': '// KONTAKT',
@@ -322,10 +322,10 @@
       'nav.process': 'Process',
       'nav.contact': 'Contact',
 
-      'hero.status': 'Available for engagements · Q3 2026',
+      'hero.status': 'Available from July 2026 · Q3 slots open',
       'hero.title1': 'Offensive Security.',
-      'hero.title2': 'Structured. Defensible.',
-      'hero.sub': 'Penetration testing, bug bounty research, and OT/ICS security — with reports the board understands and engineering can act on.',
+      'hero.title2': 'I find what scanners miss.',
+      'hero.sub': '20+ verified findings on HackerOne & Bugcrowd · bug bounty hunter since 2020. Manual penetration testing for web, Active Directory, and OT/ICS — with reports the board understands and engineering can act on.',
       'hero.cta1': 'Request engagement',
       'hero.cta2': 'View sample finding',
 
@@ -398,10 +398,10 @@
 
       'about.kicker': '// ABOUT',
       'about.title': 'Josef Roland Basner',
-      'about.p1': 'Penetration tester and security researcher focused on OT/ICS environments and web application security. Bug bounty hunter since 2020 with triaged findings on public programs.',
+      'about.p1': 'Penetration tester and security researcher focused on web application security, Active Directory, and OT/ICS. Active bug bounty hunter on HackerOne and Bugcrowd since 2020 — 20+ verified findings on public programs, with a focus on business-logic flaws and chained exploits.',
       'about.p2': 'Background in industrial environments — I understand that a PLC controller wasn\'t built for "let\'s just patch it real quick".',
       'about.stat1': 'IT professional liability incl. hacker clause',
-      'about.stat2': 'Bug bounty hunter since',
+      'about.stat2': 'Verified findings on H1 & Bugcrowd',
       'about.stat3': 'Based in Anklam · on-site & remote',
 
       'contact.kicker': '// CONTACT',
