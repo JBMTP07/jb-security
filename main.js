@@ -9,7 +9,7 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------------
-     1. THREE.JS BACKGROUND — Glitch globe with attack trajectories
+     1. THREE.JS BACKGROUND — Neural network reveal + signal pulses
      ------------------------------------------------------------------ */
   function initBackground() {
     if (prefersReducedMotion || !window.THREE) return;
@@ -23,132 +23,123 @@
     renderer.setSize(window.innerWidth, window.innerHeight, false);
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050507, 0.045);
+    scene.fog = new THREE.FogExp2(0x050507, 0.05);
 
     const camera = new THREE.PerspectiveCamera(
       52, window.innerWidth / window.innerHeight, 0.1, 100
     );
     camera.position.set(0, 0, 14);
 
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
+    const net = new THREE.Group();
+    scene.add(net);
 
-    const RADIUS = 4.6;
-
-    /* ---- Wireframe globe ---- */
-    const wireGeo = new THREE.IcosahedronGeometry(RADIUS, 4);
-    const wireEdges = new THREE.EdgesGeometry(wireGeo, 8);
-    const wireMat = new THREE.LineBasicMaterial({
-      color: 0x00ff9d, transparent: true, opacity: 0.18,
-    });
-    const wireGlobe = new THREE.LineSegments(wireEdges, wireMat);
-    globeGroup.add(wireGlobe);
-
-    /* ---- Inner dark sphere (occluder so back arcs feel "behind") ---- */
-    const innerGeo = new THREE.SphereGeometry(RADIUS * 0.985, 48, 48);
-    const innerMat = new THREE.MeshBasicMaterial({
-      color: 0x05070a, transparent: true, opacity: 0.96,
-    });
-    globeGroup.add(new THREE.Mesh(innerGeo, innerMat));
-
-    /* ---- Surface "city" dots ---- */
-    const dotCount = 220;
-    const dotPos = new Float32Array(dotCount * 3);
-    const dotPoints = [];
-    for (let i = 0; i < dotCount; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      const x = RADIUS * Math.sin(phi) * Math.cos(theta);
-      const y = RADIUS * Math.sin(phi) * Math.sin(theta);
-      const z = RADIUS * Math.cos(phi);
-      dotPos[i * 3] = x; dotPos[i * 3 + 1] = y; dotPos[i * 3 + 2] = z;
-      dotPoints.push(new THREE.Vector3(x, y, z));
+    /* ---- Generate nodes on a Fibonacci sphere (even distribution) ---- */
+    const NODE_COUNT = 120;
+    const RADIUS = 5.2;
+    const nodes = [];
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < NODE_COUNT; i++) {
+      const y = 1 - (i / (NODE_COUNT - 1)) * 2;
+      const ringR = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * i;
+      const r = RADIUS * (0.88 + Math.random() * 0.24);
+      const target = new THREE.Vector3(
+        r * ringR * Math.cos(theta),
+        r * y,
+        r * ringR * Math.sin(theta)
+      );
+      // Origin: tight scatter near the center, so reveal feels like an outward burst
+      const origin = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.6,
+        (Math.random() - 0.5) * 0.6,
+        (Math.random() - 0.5) * 0.6
+      );
+      // Per-node arrival delay for an organic, staggered burst
+      const delay = Math.random() * 0.35;
+      nodes.push({ target, origin, pos: origin.clone(), delay });
     }
-    const dotGeo = new THREE.BufferGeometry();
-    dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPos, 3));
-    const dotMat = new THREE.PointsMaterial({
-      color: 0x00ff9d, size: 0.045, transparent: true, opacity: 0.65, sizeAttenuation: true,
+
+    /* ---- Node points ---- */
+    const nodePos = new Float32Array(NODE_COUNT * 3);
+    const nodeGeo = new THREE.BufferGeometry();
+    nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePos, 3));
+    const nodeMat = new THREE.PointsMaterial({
+      color: 0x00ff9d, size: 0.12, transparent: true, opacity: 0,
+      sizeAttenuation: true,
     });
-    globeGroup.add(new THREE.Points(dotGeo, dotMat));
+    const nodePoints = new THREE.Points(nodeGeo, nodeMat);
+    net.add(nodePoints);
 
-    /* ---- Outer ambient ring (subtle) ---- */
-    const ringGeo = new THREE.TorusGeometry(RADIUS * 1.6, 0.015, 8, 120);
-    const ringMat = new THREE.LineBasicMaterial({
-      color: 0x00d4ff, transparent: true, opacity: 0.22,
-    });
-    const ring = new THREE.LineSegments(new THREE.EdgesGeometry(ringGeo), ringMat);
-    ring.rotation.x = Math.PI / 2.4;
-    globeGroup.add(ring);
-
-    /* ---- Attack trajectories ---- */
-    const MAX_ARCS = 14;
-    const arcs = [];
-    const arcContainer = new THREE.Group();
-    globeGroup.add(arcContainer);
-
-    function spawnArc() {
-      if (arcs.length >= MAX_ARCS) return;
-      const from = dotPoints[Math.floor(Math.random() * dotPoints.length)];
-      let to = dotPoints[Math.floor(Math.random() * dotPoints.length)];
-      // Prefer arcs across the globe (not micro-hops)
-      for (let i = 0; i < 4 && from.distanceTo(to) < RADIUS * 1.1; i++) {
-        to = dotPoints[Math.floor(Math.random() * dotPoints.length)];
+    /* ---- Precompute edges between nearby nodes (final positions) ---- */
+    const EDGE_DIST = RADIUS * 0.55;
+    let edges = [];
+    for (let i = 0; i < NODE_COUNT; i++) {
+      for (let j = i + 1; j < NODE_COUNT; j++) {
+        const d = nodes[i].target.distanceTo(nodes[j].target);
+        if (d < EDGE_DIST) edges.push({ a: i, b: j, dist: d });
       }
-      const apex = from.clone().add(to).normalize()
-        .multiplyScalar(RADIUS + 0.6 + Math.random() * RADIUS * 0.6);
-      const curve = new THREE.QuadraticBezierCurve3(from, apex, to);
+    }
+    // Cap to keep render budget tight — keep the shortest edges (the meshy ones)
+    edges.sort((x, y) => x.dist - y.dist);
+    edges = edges.slice(0, 280);
 
-      const SEG = 48;
-      const pts = curve.getPoints(SEG);
-      const arcGeo = new THREE.BufferGeometry().setFromPoints(pts);
-      const critical = Math.random() < 0.25;
-      const color = critical ? 0xff3b6b : 0x00ff9d;
-      const arcMat = new THREE.LineBasicMaterial({
-        color, transparent: true, opacity: 0,
+    const edgePos = new Float32Array(edges.length * 6);
+    const edgeGeo = new THREE.BufferGeometry();
+    edgeGeo.setAttribute('position', new THREE.BufferAttribute(edgePos, 3));
+    const edgeMat = new THREE.LineBasicMaterial({
+      color: 0x00ff9d, transparent: true, opacity: 0,
+    });
+    const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
+    net.add(edgeLines);
+
+    /* ---- Signal pulses — particles traveling along random edges ---- */
+    const MAX_PULSES = 9;
+    const pulses = [];
+    const pulseContainer = new THREE.Group();
+    net.add(pulseContainer);
+
+    function spawnPulse() {
+      if (pulses.length >= MAX_PULSES || edges.length === 0) return;
+      const e = edges[Math.floor(Math.random() * edges.length)];
+      const critical = Math.random() < 0.12; // rare red alert
+      const color = critical ? 0xff3b6b : 0x00d4ff;
+      const pgeo = new THREE.BufferGeometry();
+      pgeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3), 3));
+      const pmat = new THREE.PointsMaterial({
+        color, size: critical ? 0.22 : 0.16,
+        transparent: true, opacity: 0, sizeAttenuation: true,
       });
-      const arcLine = new THREE.Line(arcGeo, arcMat);
-      arcContainer.add(arcLine);
-
-      // Leading "packet"
-      const packetGeo = new THREE.BufferGeometry();
-      packetGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3), 3));
-      const packetMat = new THREE.PointsMaterial({
-        color, size: critical ? 0.18 : 0.12, transparent: true, opacity: 0, sizeAttenuation: true,
-      });
-      const packet = new THREE.Points(packetGeo, packetMat);
-      arcContainer.add(packet);
-
-      arcs.push({
-        line: arcLine, mat: arcMat, packet, packetMat, packetGeo, curve,
-        t: 0, life: 1.6 + Math.random() * 1.4, critical,
+      const pts = new THREE.Points(pgeo, pmat);
+      pulseContainer.add(pts);
+      pulses.push({
+        edge: e, geom: pgeo, mat: pmat, points: pts,
+        t: 0, life: 1.1 + Math.random() * 0.9, critical,
       });
     }
 
-    function updateArcs(dt) {
-      for (let i = arcs.length - 1; i >= 0; i--) {
-        const a = arcs[i];
-        a.t += dt;
-        const p = a.t / a.life; // 0..1
-        // Fade in 0..0.2, hold, fade out 0.7..1
+    function updatePulses(dt) {
+      for (let i = pulses.length - 1; i >= 0; i--) {
+        const p = pulses[i];
+        p.t += dt;
+        const k = p.t / p.life; // 0..1
+        const a = nodes[p.edge.a].pos;
+        const b = nodes[p.edge.b].pos;
+        const arr = p.geom.attributes.position.array;
+        arr[0] = a.x + (b.x - a.x) * k;
+        arr[1] = a.y + (b.y - a.y) * k;
+        arr[2] = a.z + (b.z - a.z) * k;
+        p.geom.attributes.position.needsUpdate = true;
+        // Smooth fade in/out
         let alpha;
-        if (p < 0.2) alpha = p / 0.2;
-        else if (p < 0.7) alpha = 1;
-        else if (p < 1) alpha = (1 - p) / 0.3;
+        if (k < 0.18) alpha = k / 0.18;
+        else if (k < 0.8) alpha = 1;
+        else if (k < 1) alpha = (1 - k) / 0.2;
         else alpha = 0;
-        a.mat.opacity = alpha * (a.critical ? 0.85 : 0.55);
-        // Packet position
-        const pt = a.curve.getPoint(Math.min(p / 0.85, 1));
-        a.packetGeo.attributes.position.array[0] = pt.x;
-        a.packetGeo.attributes.position.array[1] = pt.y;
-        a.packetGeo.attributes.position.array[2] = pt.z;
-        a.packetGeo.attributes.position.needsUpdate = true;
-        a.packetMat.opacity = alpha * 0.95;
-        if (p >= 1) {
-          arcContainer.remove(a.line);
-          arcContainer.remove(a.packet);
-          a.line.geometry.dispose(); a.mat.dispose();
-          a.packet.geometry.dispose(); a.packetMat.dispose();
-          arcs.splice(i, 1);
+        p.mat.opacity = alpha * (p.critical ? 0.95 : 0.85);
+        if (k >= 1) {
+          pulseContainer.remove(p.points);
+          p.geom.dispose(); p.mat.dispose();
+          pulses.splice(i, 1);
         }
       }
     }
@@ -156,8 +147,8 @@
     /* ---- Mouse parallax ---- */
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     window.addEventListener('mousemove', (e) => {
-      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.6;
-      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.6;
+      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.55;
+      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.55;
     }, { passive: true });
 
     /* ---- Resize ---- */
@@ -168,8 +159,13 @@
     }
     window.addEventListener('resize', onResize, { passive: true });
 
+    /* ---- Intro reveal parameters ---- */
+    const INTRO_DURATION = 1.8; // seconds for full burst
+    const EDGE_FADE_START = 0.45; // intro progress at which edges begin appearing
+
     /* ---- Animate ---- */
     let last = performance.now();
+    let elapsed = 0;
     let spawnTimer = 0;
     let running = true;
     document.addEventListener('visibilitychange', () => {
@@ -177,25 +173,73 @@
       if (running) { last = performance.now(); requestAnimationFrame(loop); }
     });
 
+    function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+    function easeOutBack(t) {
+      // gentle overshoot on the burst
+      const c = 1.4;
+      return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+    }
+
     function loop(now) {
       if (!running) return;
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
+      elapsed += dt;
 
-      mouse.x += (mouse.tx - mouse.x) * 0.04;
-      mouse.y += (mouse.ty - mouse.y) * 0.04;
+      const introT = Math.min(elapsed / INTRO_DURATION, 1);
+      const introDone = introT >= 1;
 
-      globeGroup.rotation.y += dt * 0.08;
-      globeGroup.rotation.x += dt * 0.02;
-      ring.rotation.z += dt * 0.12;
-
-      spawnTimer += dt;
-      const spawnInterval = 0.45;
-      while (spawnTimer >= spawnInterval) {
-        spawnTimer -= spawnInterval;
-        spawnArc();
+      // Update each node position with its own delayed eased ramp
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const n = nodes[i];
+        const localT = Math.max(0, Math.min(
+          (elapsed - n.delay) / (INTRO_DURATION - 0.35), 1
+        ));
+        const eased = easeOutBack(localT);
+        n.pos.x = n.origin.x + (n.target.x - n.origin.x) * eased;
+        n.pos.y = n.origin.y + (n.target.y - n.origin.y) * eased;
+        n.pos.z = n.origin.z + (n.target.z - n.origin.z) * eased;
+        nodePos[i * 3] = n.pos.x;
+        nodePos[i * 3 + 1] = n.pos.y;
+        nodePos[i * 3 + 2] = n.pos.z;
       }
-      updateArcs(dt);
+      nodeGeo.attributes.position.needsUpdate = true;
+
+      // Node opacity ramps with intro
+      nodeMat.opacity = Math.min(easeOutQuart(introT) * 0.95, 0.92);
+
+      // Edge fade-in after EDGE_FADE_START
+      const eT = Math.max(0, (introT - EDGE_FADE_START) / (1 - EDGE_FADE_START));
+      edgeMat.opacity = easeOutQuart(eT) * 0.28;
+
+      // Update edge positions every frame (cheap enough for 280 edges)
+      for (let i = 0; i < edges.length; i++) {
+        const e = edges[i];
+        const a = nodes[e.a].pos;
+        const b = nodes[e.b].pos;
+        const off = i * 6;
+        edgePos[off]     = a.x;
+        edgePos[off + 1] = a.y;
+        edgePos[off + 2] = a.z;
+        edgePos[off + 3] = b.x;
+        edgePos[off + 4] = b.y;
+        edgePos[off + 5] = b.z;
+      }
+      edgeGeo.attributes.position.needsUpdate = true;
+
+      // Slow drift once the network has formed
+      if (introDone) {
+        net.rotation.y += dt * 0.06;
+        net.rotation.x += dt * 0.012;
+        // Signal pulses
+        spawnTimer += dt;
+        const interval = 0.35;
+        while (spawnTimer >= interval) {
+          spawnTimer -= interval;
+          spawnPulse();
+        }
+      }
+      updatePulses(dt);
 
       camera.position.x += (mouse.x * 3 - camera.position.x) * 0.05;
       camera.position.y += (-mouse.y * 3 - camera.position.y) * 0.05;
