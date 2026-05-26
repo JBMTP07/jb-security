@@ -59,16 +59,27 @@
       nodes.push({ target, origin, pos: origin.clone(), delay });
     }
 
-    /* ---- Node points ---- */
+    /* ---- Node points (vertex colors for cursor reaction) ---- */
     const nodePos = new Float32Array(NODE_COUNT * 3);
+    const nodeColor = new Float32Array(NODE_COUNT * 3);
+    const BASE_NODE = new THREE.Color(0x00ff9d);
+    const HOT_NODE = new THREE.Color(0xffffff);
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodeColor[i * 3] = BASE_NODE.r;
+      nodeColor[i * 3 + 1] = BASE_NODE.g;
+      nodeColor[i * 3 + 2] = BASE_NODE.b;
+    }
     const nodeGeo = new THREE.BufferGeometry();
     nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePos, 3));
+    nodeGeo.setAttribute('color', new THREE.BufferAttribute(nodeColor, 3));
     const nodeMat = new THREE.PointsMaterial({
-      color: 0x00ff9d, size: 0.12, transparent: true, opacity: 0,
-      sizeAttenuation: true,
+      size: 0.12, transparent: true, opacity: 0,
+      sizeAttenuation: true, vertexColors: true,
     });
     const nodePoints = new THREE.Points(nodeGeo, nodeMat);
     net.add(nodePoints);
+    const nodeIntensity = new Float32Array(NODE_COUNT); // 0..1
+    const nodeLastFire = new Float32Array(NODE_COUNT);  // seconds since last pulse spawn
 
     /* ---- Precompute edges between nearby nodes (final positions) ---- */
     const EDGE_DIST = RADIUS * 0.55;
@@ -84,13 +95,27 @@
     edges = edges.slice(0, 280);
 
     const edgePos = new Float32Array(edges.length * 6);
+    const edgeCol = new Float32Array(edges.length * 6);
+    for (let i = 0; i < edges.length * 2; i++) {
+      edgeCol[i * 3] = BASE_NODE.r;
+      edgeCol[i * 3 + 1] = BASE_NODE.g;
+      edgeCol[i * 3 + 2] = BASE_NODE.b;
+    }
     const edgeGeo = new THREE.BufferGeometry();
     edgeGeo.setAttribute('position', new THREE.BufferAttribute(edgePos, 3));
+    edgeGeo.setAttribute('color', new THREE.BufferAttribute(edgeCol, 3));
     const edgeMat = new THREE.LineBasicMaterial({
-      color: 0x00ff9d, transparent: true, opacity: 0,
+      transparent: true, opacity: 0, vertexColors: true,
     });
     const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
     net.add(edgeLines);
+
+    /* ---- Adjacency list for fast "fire neighbors" lookups ---- */
+    const neighbors = Array.from({ length: NODE_COUNT }, () => []);
+    for (let i = 0; i < edges.length; i++) {
+      neighbors[edges[i].a].push(edges[i].b);
+      neighbors[edges[i].b].push(edges[i].a);
+    }
 
     /* ---- Signal pulses — particles traveling along random edges ---- */
     const MAX_PULSES = 9;
@@ -98,23 +123,28 @@
     const pulseContainer = new THREE.Group();
     net.add(pulseContainer);
 
-    function spawnPulse() {
-      if (pulses.length >= MAX_PULSES || edges.length === 0) return;
-      const e = edges[Math.floor(Math.random() * edges.length)];
-      const critical = Math.random() < 0.12; // rare red alert
-      const color = critical ? 0xff3b6b : 0x00d4ff;
+    function spawnPulseOnEdge(e, opts) {
+      if (pulses.length >= MAX_PULSES) return;
+      opts = opts || {};
+      const critical = opts.critical != null ? opts.critical : Math.random() < 0.12;
+      const ignite = !!opts.ignite;
+      const color = ignite ? 0xffffff : (critical ? 0xff3b6b : 0x00d4ff);
       const pgeo = new THREE.BufferGeometry();
       pgeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3), 3));
       const pmat = new THREE.PointsMaterial({
-        color, size: critical ? 0.22 : 0.16,
+        color, size: ignite ? 0.22 : (critical ? 0.22 : 0.16),
         transparent: true, opacity: 0, sizeAttenuation: true,
       });
       const pts = new THREE.Points(pgeo, pmat);
       pulseContainer.add(pts);
       pulses.push({
-        edge: e, geom: pgeo, mat: pmat, points: pts,
-        t: 0, life: 1.1 + Math.random() * 0.9, critical,
+        edge: e, from: opts.from, geom: pgeo, mat: pmat, points: pts,
+        t: 0, life: opts.life || (1.1 + Math.random() * 0.9), critical, ignite,
       });
+    }
+    function spawnPulse() {
+      if (edges.length === 0) return;
+      spawnPulseOnEdge(edges[Math.floor(Math.random() * edges.length)]);
     }
 
     function updatePulses(dt) {
@@ -122,8 +152,11 @@
         const p = pulses[i];
         p.t += dt;
         const k = p.t / p.life; // 0..1
-        const a = nodes[p.edge.a].pos;
-        const b = nodes[p.edge.b].pos;
+        // Direction: if `from` is set, travel from `from` to the other endpoint
+        let aIdx = p.edge.a, bIdx = p.edge.b;
+        if (p.from != null && p.from === bIdx) { aIdx = p.edge.b; bIdx = p.edge.a; }
+        const a = nodes[aIdx].pos;
+        const b = nodes[bIdx].pos;
         const arr = p.geom.attributes.position.array;
         arr[0] = a.x + (b.x - a.x) * k;
         arr[1] = a.y + (b.y - a.y) * k;
@@ -135,7 +168,7 @@
         else if (k < 0.8) alpha = 1;
         else if (k < 1) alpha = (1 - k) / 0.2;
         else alpha = 0;
-        p.mat.opacity = alpha * (p.critical ? 0.95 : 0.85);
+        p.mat.opacity = alpha * (p.ignite ? 1 : (p.critical ? 0.95 : 0.85));
         if (k >= 1) {
           pulseContainer.remove(p.points);
           p.geom.dispose(); p.mat.dispose();
@@ -144,12 +177,18 @@
       }
     }
 
-    /* ---- Mouse parallax ---- */
-    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    /* ---- Mouse parallax + screen-space tracking ---- */
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0, sx: -1e6, sy: -1e6, active: false };
     window.addEventListener('mousemove', (e) => {
       mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.55;
       mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.55;
+      mouse.sx = e.clientX;
+      mouse.sy = e.clientY;
+      mouse.active = true;
     }, { passive: true });
+    window.addEventListener('mouseout', () => { mouse.active = false; }, { passive: true });
+    // Pause cursor-interaction when pointer leaves the document
+    document.addEventListener('mouseleave', () => { mouse.active = false; });
 
     /* ---- Resize ---- */
     function onResize() {
@@ -162,6 +201,7 @@
     /* ---- Intro reveal parameters ---- */
     const INTRO_DURATION = 1.8; // seconds for full burst
     const EDGE_FADE_START = 0.45; // intro progress at which edges begin appearing
+    const projectVec = new THREE.Vector3();
 
     /* ---- Animate ---- */
     let last = performance.now();
@@ -240,6 +280,75 @@
         }
       }
       updatePulses(dt);
+
+      /* ---- Cursor reaction: light up nearby nodes + ignite pulses ---- */
+      net.updateMatrixWorld();
+      const W = renderer.domElement.clientWidth || window.innerWidth;
+      const H = renderer.domElement.clientHeight || window.innerHeight;
+      const INFLUENCE_PX = 220;
+      const cursorActive = introDone && mouse.active;
+      const projV = projectVec;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        let intensity = 0;
+        if (cursorActive) {
+          projV.set(nodes[i].pos.x, nodes[i].pos.y, nodes[i].pos.z);
+          projV.applyMatrix4(net.matrixWorld).project(camera);
+          const sx = (projV.x * 0.5 + 0.5) * W;
+          const sy = (-projV.y * 0.5 + 0.5) * H;
+          const dx = sx - mouse.sx, dy = sy - mouse.sy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < INFLUENCE_PX && projV.z < 1) {
+            const k = 1 - dist / INFLUENCE_PX;
+            intensity = k * k; // ease-out toward the centre
+          }
+        }
+        // Smooth toward target
+        nodeIntensity[i] += (intensity - nodeIntensity[i]) * 0.18;
+        // Mix base color toward hot color
+        const t = Math.min(nodeIntensity[i] * 1.3, 1);
+        const r = BASE_NODE.r + (HOT_NODE.r - BASE_NODE.r) * t;
+        const g = BASE_NODE.g + (HOT_NODE.g - BASE_NODE.g) * t;
+        const b = BASE_NODE.b + (HOT_NODE.b - BASE_NODE.b) * t;
+        nodeColor[i * 3]     = r;
+        nodeColor[i * 3 + 1] = g;
+        nodeColor[i * 3 + 2] = b;
+        // Fire signal pulses from a strongly-lit node, with cooldown
+        nodeLastFire[i] += dt;
+        if (introDone && nodeIntensity[i] > 0.55 && nodeLastFire[i] > 0.6) {
+          nodeLastFire[i] = 0;
+          const nb = neighbors[i];
+          // Up to 3 neighbors, prefer farthest (most dramatic)
+          const sample = nb.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(3, nb.length));
+          for (const j of sample) {
+            // find edge between i and j
+            const e = edges.find(ed => (ed.a === i && ed.b === j) || (ed.a === j && ed.b === i));
+            if (e) spawnPulseOnEdge(e, { from: i, ignite: true, life: 0.7 + Math.random() * 0.3 });
+          }
+        }
+      }
+      nodeGeo.attributes.color.needsUpdate = true;
+
+      // Edge colors: blend between endpoint intensities
+      for (let i = 0; i < edges.length; i++) {
+        const e = edges[i];
+        const ia = nodeIntensity[e.a];
+        const ib = nodeIntensity[e.b];
+        const off = i * 6;
+        const ta = Math.min(ia * 1.3, 1);
+        const tb = Math.min(ib * 1.3, 1);
+        edgeCol[off]     = BASE_NODE.r + (HOT_NODE.r - BASE_NODE.r) * ta;
+        edgeCol[off + 1] = BASE_NODE.g + (HOT_NODE.g - BASE_NODE.g) * ta;
+        edgeCol[off + 2] = BASE_NODE.b + (HOT_NODE.b - BASE_NODE.b) * ta;
+        edgeCol[off + 3] = BASE_NODE.r + (HOT_NODE.r - BASE_NODE.r) * tb;
+        edgeCol[off + 4] = BASE_NODE.g + (HOT_NODE.g - BASE_NODE.g) * tb;
+        edgeCol[off + 5] = BASE_NODE.b + (HOT_NODE.b - BASE_NODE.b) * tb;
+      }
+      edgeGeo.attributes.color.needsUpdate = true;
+
+      // Boost edge base opacity when cursor is in network — keeps lit edges visible
+      const maxIntensity = Math.max.apply(null, nodeIntensity);
+      const baseEdgeOpacity = easeOutQuart(eT) * 0.28;
+      edgeMat.opacity = baseEdgeOpacity + maxIntensity * 0.35;
 
       camera.position.x += (mouse.x * 3 - camera.position.x) * 0.05;
       camera.position.y += (-mouse.y * 3 - camera.position.y) * 0.05;
