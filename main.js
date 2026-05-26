@@ -218,8 +218,8 @@
       'hero.title1': 'Offensive Security.',
       'hero.title2': 'Ich finde, was Scanner übersehen.',
       'hero.sub': '20+ verifizierte Findings über HackerOne & Bugcrowd · Bug Bounty seit 2020. Manuelle Pentests für Web, Active Directory und OT/ICS — mit Reports, die der Vorstand versteht und das Engineering umsetzen kann.',
-      'hero.cta1': 'Engagement anfragen',
-      'hero.cta2': 'Echten Fund ansehen',
+      'hero.cta1': 'Pentest anfragen',
+      'hero.cta2': 'Sample-Report ansehen',
 
       'services.kicker': '// LEISTUNGEN',
       'services.title': 'Was [JB] Security macht.',
@@ -312,7 +312,9 @@
       'form.consent': 'Ich bin damit einverstanden, dass meine Angaben zur Beantwortung verarbeitet werden.',
       'form.submit': 'Anfrage senden →',
 
-      'footer.kleinunt': 'Einzelunternehmer · Kleinunternehmer gemäß § 19 UStG',
+      'footer.kleinunt': 'Kleinunternehmer § 19 UStG',
+      'footer.impressum': 'Impressum',
+      'footer.datenschutz': 'Datenschutz',
       'footer.year': '© 2026',
     },
     en: {
@@ -326,8 +328,8 @@
       'hero.title1': 'Offensive Security.',
       'hero.title2': 'I find what scanners miss.',
       'hero.sub': '20+ verified findings on HackerOne & Bugcrowd · bug bounty hunter since 2020. Manual penetration testing for web, Active Directory, and OT/ICS — with reports the board understands and engineering can act on.',
-      'hero.cta1': 'Request engagement',
-      'hero.cta2': 'See a real finding',
+      'hero.cta1': 'Request a pentest',
+      'hero.cta2': 'View sample report',
 
       'services.kicker': '// SERVICES',
       'services.title': 'What [JB] Security does.',
@@ -420,7 +422,9 @@
       'form.consent': 'I consent to my data being processed for the purpose of replying to this inquiry.',
       'form.submit': 'Send inquiry →',
 
-      'footer.kleinunt': 'Sole proprietor · Small business per § 19 UStG (Germany)',
+      'footer.kleinunt': 'Small business · § 19 UStG (DE)',
+      'footer.impressum': 'Legal notice',
+      'footer.datenschutz': 'Privacy',
       'footer.year': '© 2026',
     },
   };
