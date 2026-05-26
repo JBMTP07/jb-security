@@ -4,7 +4,7 @@ Penetration Testing · OT/ICS Security · Bug Bounty Research
 
 Marketing site for **[JB] Security** — Inh. Josef Roland Basner.
 
-Live: <https://jbmtp07.github.io/jb-security/>
+Live: <https://jb-security.de/>
 
 ## Stack
 
