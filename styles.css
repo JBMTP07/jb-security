@@ -1011,6 +1011,84 @@ h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
   display: flex; gap: 10px; flex-wrap: wrap;
 }
 
+/* ============ CURSOR GLOW ============ */
+.cursor-glow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(circle, rgba(0, 255, 157, 0.10) 0%, rgba(0, 255, 157, 0.04) 30%, transparent 65%);
+  mix-blend-mode: screen;
+  will-change: transform;
+  transition: opacity 0.3s;
+}
+@media (hover: none) { .cursor-glow { display: none; } }
+
+/* ============ TYPOGRAPHY — serif accent ============ */
+.serif {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+h1 .serif, h2 .serif, h3 .serif {
+  font-size: 1.05em;
+  line-height: 0.95;
+}
+
+/* ============ SEVERITY PULSE on sample finding ============ */
+.severity-pill {
+  position: relative;
+}
+.severity-pill::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 6px;
+  background: var(--crit);
+  z-index: -1;
+  opacity: 0.7;
+  animation: sev-pulse 2.4s ease-out infinite;
+}
+@keyframes sev-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ============ FINDING CHAIN — sequential glow ============ */
+.finding-chain .phase {
+  transition: transform 0.4s ease, border-color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+.finding-chain .phase.phase-lit {
+  border-color: rgba(0, 255, 157, 0.6);
+  box-shadow: 0 0 24px rgba(0, 255, 157, 0.18), inset 0 0 0 1px rgba(0, 255, 157, 0.2);
+  background: rgba(0, 255, 157, 0.04);
+}
+.finding-chain .phase.phase-lit .phase-num { color: var(--neon); }
+.finding-chain .phase-arrow {
+  transition: text-shadow 0.4s;
+}
+.finding-chain .phase.phase-lit + .phase-arrow {
+  animation: arrow-pulse 1.2s ease-in-out infinite;
+}
+@keyframes arrow-pulse {
+  0%, 100% { text-shadow: 0 0 8px var(--neon); }
+  50% { text-shadow: 0 0 18px var(--neon), 0 0 32px var(--neon); }
+}
+
+/* ============ TERMINAL — typewriter additions ============ */
+.term-body .cmd {
+  color: var(--text);
+}
+.term-body p { min-height: 1.6em; }
+
+/* Magnetic btn — already transitioned smoothly via existing .btn transition */
+.btn, .mail-option {
+  transition: transform 0.18s ease-out, background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
 /* ============ LEGAL PAGES (Impressum / Datenschutz) ============ */
 .legal {
   position: relative;

@@ -9,7 +9,7 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------------
-     1. THREE.JS BACKGROUND — Wireframe network + drifting particles
+     1. THREE.JS BACKGROUND — Glitch globe with attack trajectories
      ------------------------------------------------------------------ */
   function initBackground() {
     if (prefersReducedMotion || !window.THREE) return;
@@ -17,91 +17,147 @@
     if (!canvas) return;
 
     const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: 'low-power',
+      canvas, antialias: true, alpha: true, powerPreference: 'low-power',
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight, false);
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050507, 0.06);
+    scene.fog = new THREE.FogExp2(0x050507, 0.045);
 
     const camera = new THREE.PerspectiveCamera(
-      55, window.innerWidth / window.innerHeight, 0.1, 100
+      52, window.innerWidth / window.innerHeight, 0.1, 100
     );
     camera.position.set(0, 0, 14);
 
-    /* ---- Wireframe icosahedron (the "core") ---- */
-    const coreGeo = new THREE.IcosahedronGeometry(3.4, 1);
-    const coreEdges = new THREE.EdgesGeometry(coreGeo);
-    const coreMat = new THREE.LineBasicMaterial({
-      color: 0x00ff9d,
-      transparent: true,
-      opacity: 0.35,
+    const globeGroup = new THREE.Group();
+    scene.add(globeGroup);
+
+    const RADIUS = 4.6;
+
+    /* ---- Wireframe globe ---- */
+    const wireGeo = new THREE.IcosahedronGeometry(RADIUS, 4);
+    const wireEdges = new THREE.EdgesGeometry(wireGeo, 8);
+    const wireMat = new THREE.LineBasicMaterial({
+      color: 0x00ff9d, transparent: true, opacity: 0.18,
     });
-    const core = new THREE.LineSegments(coreEdges, coreMat);
-    scene.add(core);
+    const wireGlobe = new THREE.LineSegments(wireEdges, wireMat);
+    globeGroup.add(wireGlobe);
 
-    /* ---- Inner glow sphere ---- */
-    const glowGeo = new THREE.SphereGeometry(2.4, 32, 32);
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: 0x003322,
-      transparent: true,
-      opacity: 0.12,
-      wireframe: false,
+    /* ---- Inner dark sphere (occluder so back arcs feel "behind") ---- */
+    const innerGeo = new THREE.SphereGeometry(RADIUS * 0.985, 48, 48);
+    const innerMat = new THREE.MeshBasicMaterial({
+      color: 0x05070a, transparent: true, opacity: 0.96,
     });
-    const glow = new THREE.Mesh(glowGeo, glowMat);
-    scene.add(glow);
+    globeGroup.add(new THREE.Mesh(innerGeo, innerMat));
 
-    /* ---- Outer rotating ring (torus) ---- */
-    const ringGeo = new THREE.TorusGeometry(6.5, 0.04, 8, 80);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x00d4ff,
-      transparent: true,
-      opacity: 0.25,
-    });
-    const ring1 = new THREE.Mesh(ringGeo, ringMat);
-    ring1.rotation.x = Math.PI / 2.6;
-    scene.add(ring1);
-
-    const ring2 = new THREE.Mesh(ringGeo.clone(), ringMat.clone());
-    ring2.rotation.x = -Math.PI / 3.2;
-    ring2.rotation.y = Math.PI / 4;
-    ring2.scale.setScalar(1.2);
-    scene.add(ring2);
-
-    /* ---- Particle field ---- */
-    const pCount = 900;
-    const positions = new Float32Array(pCount * 3);
-    const speeds = new Float32Array(pCount);
-    for (let i = 0; i < pCount; i++) {
-      const r = 8 + Math.random() * 22;
+    /* ---- Surface "city" dots ---- */
+    const dotCount = 220;
+    const dotPos = new Float32Array(dotCount * 3);
+    const dotPoints = [];
+    for (let i = 0; i < dotCount; i++) {
       const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = r * Math.cos(phi);
-      speeds[i] = 0.2 + Math.random() * 0.6;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const x = RADIUS * Math.sin(phi) * Math.cos(theta);
+      const y = RADIUS * Math.sin(phi) * Math.sin(theta);
+      const z = RADIUS * Math.cos(phi);
+      dotPos[i * 3] = x; dotPos[i * 3 + 1] = y; dotPos[i * 3 + 2] = z;
+      dotPoints.push(new THREE.Vector3(x, y, z));
     }
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const pMat = new THREE.PointsMaterial({
-      color: 0x00ff9d,
-      size: 0.04,
-      transparent: true,
-      opacity: 0.7,
-      sizeAttenuation: true,
+    const dotGeo = new THREE.BufferGeometry();
+    dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPos, 3));
+    const dotMat = new THREE.PointsMaterial({
+      color: 0x00ff9d, size: 0.045, transparent: true, opacity: 0.65, sizeAttenuation: true,
     });
-    const particles = new THREE.Points(pGeo, pMat);
-    scene.add(particles);
+    globeGroup.add(new THREE.Points(dotGeo, dotMat));
+
+    /* ---- Outer ambient ring (subtle) ---- */
+    const ringGeo = new THREE.TorusGeometry(RADIUS * 1.6, 0.015, 8, 120);
+    const ringMat = new THREE.LineBasicMaterial({
+      color: 0x00d4ff, transparent: true, opacity: 0.22,
+    });
+    const ring = new THREE.LineSegments(new THREE.EdgesGeometry(ringGeo), ringMat);
+    ring.rotation.x = Math.PI / 2.4;
+    globeGroup.add(ring);
+
+    /* ---- Attack trajectories ---- */
+    const MAX_ARCS = 14;
+    const arcs = [];
+    const arcContainer = new THREE.Group();
+    globeGroup.add(arcContainer);
+
+    function spawnArc() {
+      if (arcs.length >= MAX_ARCS) return;
+      const from = dotPoints[Math.floor(Math.random() * dotPoints.length)];
+      let to = dotPoints[Math.floor(Math.random() * dotPoints.length)];
+      // Prefer arcs across the globe (not micro-hops)
+      for (let i = 0; i < 4 && from.distanceTo(to) < RADIUS * 1.1; i++) {
+        to = dotPoints[Math.floor(Math.random() * dotPoints.length)];
+      }
+      const apex = from.clone().add(to).normalize()
+        .multiplyScalar(RADIUS + 0.6 + Math.random() * RADIUS * 0.6);
+      const curve = new THREE.QuadraticBezierCurve3(from, apex, to);
+
+      const SEG = 48;
+      const pts = curve.getPoints(SEG);
+      const arcGeo = new THREE.BufferGeometry().setFromPoints(pts);
+      const critical = Math.random() < 0.25;
+      const color = critical ? 0xff3b6b : 0x00ff9d;
+      const arcMat = new THREE.LineBasicMaterial({
+        color, transparent: true, opacity: 0,
+      });
+      const arcLine = new THREE.Line(arcGeo, arcMat);
+      arcContainer.add(arcLine);
+
+      // Leading "packet"
+      const packetGeo = new THREE.BufferGeometry();
+      packetGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3), 3));
+      const packetMat = new THREE.PointsMaterial({
+        color, size: critical ? 0.18 : 0.12, transparent: true, opacity: 0, sizeAttenuation: true,
+      });
+      const packet = new THREE.Points(packetGeo, packetMat);
+      arcContainer.add(packet);
+
+      arcs.push({
+        line: arcLine, mat: arcMat, packet, packetMat, packetGeo, curve,
+        t: 0, life: 1.6 + Math.random() * 1.4, critical,
+      });
+    }
+
+    function updateArcs(dt) {
+      for (let i = arcs.length - 1; i >= 0; i--) {
+        const a = arcs[i];
+        a.t += dt;
+        const p = a.t / a.life; // 0..1
+        // Fade in 0..0.2, hold, fade out 0.7..1
+        let alpha;
+        if (p < 0.2) alpha = p / 0.2;
+        else if (p < 0.7) alpha = 1;
+        else if (p < 1) alpha = (1 - p) / 0.3;
+        else alpha = 0;
+        a.mat.opacity = alpha * (a.critical ? 0.85 : 0.55);
+        // Packet position
+        const pt = a.curve.getPoint(Math.min(p / 0.85, 1));
+        a.packetGeo.attributes.position.array[0] = pt.x;
+        a.packetGeo.attributes.position.array[1] = pt.y;
+        a.packetGeo.attributes.position.array[2] = pt.z;
+        a.packetGeo.attributes.position.needsUpdate = true;
+        a.packetMat.opacity = alpha * 0.95;
+        if (p >= 1) {
+          arcContainer.remove(a.line);
+          arcContainer.remove(a.packet);
+          a.line.geometry.dispose(); a.mat.dispose();
+          a.packet.geometry.dispose(); a.packetMat.dispose();
+          arcs.splice(i, 1);
+        }
+      }
+    }
 
     /* ---- Mouse parallax ---- */
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     window.addEventListener('mousemove', (e) => {
-      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.5;
-      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.5;
+      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.6;
+      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.6;
     }, { passive: true });
 
     /* ---- Resize ---- */
@@ -114,6 +170,7 @@
 
     /* ---- Animate ---- */
     let last = performance.now();
+    let spawnTimer = 0;
     let running = true;
     document.addEventListener('visibilitychange', () => {
       running = document.visibilityState === 'visible';
@@ -128,15 +185,20 @@
       mouse.x += (mouse.tx - mouse.x) * 0.04;
       mouse.y += (mouse.ty - mouse.y) * 0.04;
 
-      core.rotation.x += dt * 0.15;
-      core.rotation.y += dt * 0.22;
-      glow.rotation.y -= dt * 0.1;
-      ring1.rotation.z += dt * 0.18;
-      ring2.rotation.z -= dt * 0.12;
-      particles.rotation.y += dt * 0.04;
+      globeGroup.rotation.y += dt * 0.08;
+      globeGroup.rotation.x += dt * 0.02;
+      ring.rotation.z += dt * 0.12;
 
-      camera.position.x += (mouse.x * 4 - camera.position.x) * 0.05;
-      camera.position.y += (-mouse.y * 4 - camera.position.y) * 0.05;
+      spawnTimer += dt;
+      const spawnInterval = 0.45;
+      while (spawnTimer >= spawnInterval) {
+        spawnTimer -= spawnInterval;
+        spawnArc();
+      }
+      updateArcs(dt);
+
+      camera.position.x += (mouse.x * 3 - camera.position.x) * 0.05;
+      camera.position.y += (-mouse.y * 3 - camera.position.y) * 0.05;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
@@ -275,7 +337,7 @@
       'sample.cta': 'Vollständigen Report öffnen (PDF)',
 
       'process.kicker': '// PROZESS',
-      'process.title': 'Vom Erstgespräch zum Retest.',
+      'process.title': 'Vom Erstgespräch zum <i class="serif">Retest</i>.',
       'process.lede': 'Sauber definierter Ablauf, vertraglich geregelt — mit NDA, AVV, TOM und Authorization Letter. Auf Wunsch komplette Vertragsunterlagen vorab.',
       'process.s1.title': 'Erstgespräch & Scoping',
       'process.s1.body': 'Kostenfrei. Wir klären Scope, Test-Modus, Timing und Rules of Engagement.',
@@ -289,12 +351,12 @@
       'process.s5.body': 'Verifikation behobener Schwachstellen — empfohlen 6 bis 8 Wochen nach Berichtsabgabe.',
 
       'about.kicker': '// ÜBER',
-      'about.title': 'Josef Roland Basner',
+      'about.title': 'Josef <i class="serif">Roland</i> Basner',
       'about.p1': 'Penetration Tester und Security Researcher mit Schwerpunkt auf Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv — 20+ verifizierte Findings auf öffentlichen Programmen, Schwerpunkt Business-Logic-Flaws und Exploit-Chains.',
       'about.p2': 'Hintergrund aus dem industriellen Umfeld — ich verstehe, dass eine SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.',
       'about.stat1': 'IT-Berufshaftpflicht inkl. Hacker-Klausel',
       'about.stat2': 'Verifizierte Findings auf H1 & Bugcrowd',
-      'about.stat3': 'Standort Anklam · vor Ort & remote',
+      'about.stat3': 'Pentester · OT/ICS · Anklam & remote',
 
       'contact.kicker': '// KONTAKT',
       'contact.title': 'Engagement anfragen.',
@@ -383,7 +445,7 @@
       'sample.cta': 'Open full report (PDF)',
 
       'process.kicker': '// PROCESS',
-      'process.title': 'From kickoff to retest.',
+      'process.title': 'From kickoff to <i class="serif">retest</i>.',
       'process.lede': 'Clean, contractually governed workflow — with NDA, DPA, TOM and authorization letter. Full contract package up front on request.',
       'process.s1.title': 'Kickoff & scoping',
       'process.s1.body': 'Free of charge. We define scope, test mode, timing and rules of engagement.',
@@ -397,12 +459,12 @@
       'process.s5.body': 'Verification of fixes — recommended 6 to 8 weeks after report delivery.',
 
       'about.kicker': '// ABOUT',
-      'about.title': 'Josef Roland Basner',
+      'about.title': 'Josef <i class="serif">Roland</i> Basner',
       'about.p1': 'Penetration tester and security researcher focused on web application security, Active Directory, and OT/ICS. Active bug bounty hunter on HackerOne and Bugcrowd since 2020 — 20+ verified findings on public programs, with a focus on business-logic flaws and chained exploits.',
       'about.p2': 'Background in industrial environments — I understand that a PLC controller wasn\'t built for "let\'s just patch it real quick".',
       'about.stat1': 'IT professional liability incl. hacker clause',
       'about.stat2': 'Verified findings on H1 & Bugcrowd',
-      'about.stat3': 'Based in Anklam · on-site & remote',
+      'about.stat3': 'Pentester · OT/ICS · Anklam & remote',
 
       'contact.kicker': '// CONTACT',
       'contact.title': 'Request an engagement.',
@@ -472,7 +534,177 @@
   }
 
   /* ------------------------------------------------------------------
-     5. Reveal on scroll
+     5a. Terminal — typewriter on viewport enter
+     ------------------------------------------------------------------ */
+  const TERM_LINES = [
+    { cmd: 'whoami', out: 'josef_basner' },
+    { cmd: 'id', out: 'uid=1337(pentester) groups=ot_ics,web_app,network,bugbounty' },
+    { cmd: 'cat /etc/standards', out: 'OWASP · PTES · NIST SP 800-115 · MITRE ATT&CK · IEC 62443' },
+    { cmd: 'ls -la /skills/', out: [
+        'drwxr-xr-x  josef  ot-ics/        modbus, opc-ua, s7, profinet',
+        'drwxr-xr-x  josef  web-app/       owasp top 10, wstg v4.2, business-logic',
+        'drwxr-xr-x  josef  active-dir/    kerberoasting, acl-abuse, lateral',
+        'drwxr-xr-x  josef  bug-bounty/    20+ verified · h1, bugcrowd',
+      ] },
+  ];
+
+  function initTerminal() {
+    const body = document.querySelector('.term-body');
+    if (!body) return;
+    if (prefersReducedMotion) return; // leave static fallback
+    body.innerHTML = '';
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => { if (e.isIntersecting) { obs.disconnect(); run(); } });
+    }, { threshold: 0.4 });
+    io.observe(body);
+
+    function lineHTML(cmd) {
+      return `<p><span class="prompt">jb@security</span><span class="path">~</span>$ <span class="cmd"></span><span class="cursor">_</span></p>`;
+    }
+    function outHTML(text) {
+      return `<p class="out">${text}</p>`;
+    }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    async function typeInto(span, text, perChar = 28) {
+      for (let i = 0; i < text.length; i++) {
+        span.textContent += text[i];
+        await sleep(perChar + Math.random() * 24);
+      }
+    }
+
+    async function run() {
+      for (let i = 0; i < TERM_LINES.length; i++) {
+        const ln = TERM_LINES[i];
+        body.insertAdjacentHTML('beforeend', lineHTML());
+        const lastP = body.lastElementChild;
+        const cmdSpan = lastP.querySelector('.cmd');
+        const cursor = lastP.querySelector('.cursor');
+        await typeInto(cmdSpan, ln.cmd);
+        cursor.remove();
+        await sleep(220);
+        const outs = Array.isArray(ln.out) ? ln.out : [ln.out];
+        for (const o of outs) {
+          body.insertAdjacentHTML('beforeend', outHTML(o));
+          await sleep(70);
+        }
+        await sleep(380);
+      }
+      // Final prompt with blinker
+      body.insertAdjacentHTML('beforeend',
+        `<p><span class="prompt">jb@security</span><span class="path">~</span>$ <span class="cursor">_</span></p>`);
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     5b. Counters — count up on viewport enter
+     ------------------------------------------------------------------ */
+  function initCounters() {
+    if (!('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll('[data-count]');
+    if (!els.length) return;
+
+    function formatNumber(n, decimals, locale, raw) {
+      if (raw) {
+        return n.toFixed(decimals);
+      }
+      return new Intl.NumberFormat(locale || 'de-DE', {
+        minimumFractionDigits: decimals, maximumFractionDigits: decimals,
+      }).format(n);
+    }
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        obs.unobserve(el);
+        const target = parseFloat(el.getAttribute('data-count'));
+        const dur = parseFloat(el.getAttribute('data-duration') || '1400');
+        const suffix = el.getAttribute('data-suffix') || '';
+        const prefix = el.getAttribute('data-prefix') || '';
+        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        const raw = el.hasAttribute('data-raw');
+        const start = performance.now();
+        function step(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const val = target * eased;
+          el.textContent = prefix + formatNumber(val, decimals, null, raw) + suffix;
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+
+  /* ------------------------------------------------------------------
+     5c. Magnetic buttons
+     ------------------------------------------------------------------ */
+  function initMagnetic() {
+    if (prefersReducedMotion) return;
+    const targets = document.querySelectorAll('.btn, .mail-option');
+    targets.forEach((el) => {
+      const strength = el.classList.contains('mail-option') ? 6 : 10;
+      let raf = 0;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        cancelAnimationFrame(raf);
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     5d. Cursor glow — soft blob that follows the pointer
+     ------------------------------------------------------------------ */
+  function initCursorGlow() {
+    if (prefersReducedMotion) return;
+    if (window.matchMedia('(hover: none)').matches) return; // touch
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+    let x = window.innerWidth / 2, y = window.innerHeight / 2;
+    let tx = x, ty = y;
+    window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    (function loop() {
+      x += (tx - x) * 0.18;
+      y += (ty - y) * 0.18;
+      glow.style.transform = `translate3d(${x - 200}px, ${y - 200}px, 0)`;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* ------------------------------------------------------------------
+     5e. Sample report — chain glow on viewport enter
+     ------------------------------------------------------------------ */
+  function initChain() {
+    if (!('IntersectionObserver' in window)) return;
+    const chain = document.querySelector('.finding-chain');
+    if (!chain) return;
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        const phases = chain.querySelectorAll('.phase');
+        phases.forEach((p, i) => {
+          setTimeout(() => p.classList.add('phase-lit'), 200 + i * 320);
+        });
+      });
+    }, { threshold: 0.3 });
+    io.observe(chain);
+  }
+
+  /* ------------------------------------------------------------------
+     6. Reveal on scroll
      ------------------------------------------------------------------ */
   function initReveal() {
     if (prefersReducedMotion || !('IntersectionObserver' in window)) return;
@@ -498,8 +730,13 @@
   document.addEventListener('DOMContentLoaded', () => {
     initLang();
     initBackground();
+    initCursorGlow();
     initTilt();
+    initMagnetic();
     initGlitch();
+    initTerminal();
+    initCounters();
+    initChain();
     initReveal();
   });
 })();
