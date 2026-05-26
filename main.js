@@ -301,16 +301,14 @@
       'contact.lede': 'Beschreib kurz, was du testen lassen willst. Antwort innerhalb von 48 Stunden — bei akuten Vorfällen schneller.',
       'contact.loc': 'Dr.-Külz-Straße 8a · 17389 Anklam · DE',
       'contact.note': 'Für sensible Anfragen: PGP-Schlüssel auf Anfrage. Akuter Vorfall? Direkt anrufen.',
-      'form.name': 'Name / Firma',
-      'form.email': 'E-Mail',
-      'form.type': 'Art des Engagements',
-      'form.t1': 'Web Application Pentest',
-      'form.t2': 'Netzwerk- / AD-Pentest',
-      'form.t3': 'OT / ICS Security Assessment',
-      'form.t4': 'Sonstiges / Beratung',
-      'form.msg': 'Kurzbeschreibung',
-      'form.consent': 'Ich bin damit einverstanden, dass meine Angaben zur Beantwortung verarbeitet werden.',
-      'form.submit': 'Anfrage senden →',
+      'mail.tag': '// DIREKTE ANFRAGE PER E-MAIL',
+      'mail.title': 'Wähle deinen Anfrage-Typ.',
+      'mail.body': 'Ein Klick — dein Mail-Client öffnet sich mit passendem Betreff und einer Vorlage, die ich für die Auftragsklärung brauche. Keine Drittanbieter, kein Tracking, kein Cookie-Banner.',
+      'mail.o1': 'Web Application Pentest',
+      'mail.o2': 'Netzwerk- / AD-Pentest',
+      'mail.o3': 'OT / ICS Security Assessment',
+      'mail.o4': 'Beratung / Sonstiges',
+      'mail.foot': 'Mail-Client nicht eingerichtet? Schreib direkt an <a href="mailto:josefbasner@proton.me"><strong>josefbasner@proton.me</strong></a>.',
 
       'footer.kleinunt': 'Kleinunternehmer § 19 UStG',
       'footer.impressum': 'Impressum',
@@ -411,16 +409,14 @@
       'contact.lede': 'Briefly describe what you want tested. Reply within 48 hours — faster for active incidents.',
       'contact.loc': 'Dr.-Külz-Straße 8a · 17389 Anklam · Germany',
       'contact.note': 'For sensitive inquiries: PGP key on request. Active incident? Call directly.',
-      'form.name': 'Name / Company',
-      'form.email': 'Email',
-      'form.type': 'Type of engagement',
-      'form.t1': 'Web Application Pentest',
-      'form.t2': 'Network / AD Pentest',
-      'form.t3': 'OT / ICS Security Assessment',
-      'form.t4': 'Other / Consulting',
-      'form.msg': 'Brief description',
-      'form.consent': 'I consent to my data being processed for the purpose of replying to this inquiry.',
-      'form.submit': 'Send inquiry →',
+      'mail.tag': '// DIRECT EMAIL INQUIRY',
+      'mail.title': 'Pick your inquiry type.',
+      'mail.body': 'One click — your mail client opens with the right subject and a template I need for scoping. No third party, no tracking, no cookie banner.',
+      'mail.o1': 'Web Application Pentest',
+      'mail.o2': 'Network / AD Pentest',
+      'mail.o3': 'OT / ICS Security Assessment',
+      'mail.o4': 'Consulting / Other',
+      'mail.foot': 'No mail client configured? Write directly to <a href="mailto:josefbasner@proton.me"><strong>josefbasner@proton.me</strong></a>.',
 
       'footer.kleinunt': 'Small business · § 19 UStG (DE)',
       'footer.impressum': 'Legal notice',
@@ -476,32 +472,7 @@
   }
 
   /* ------------------------------------------------------------------
-     5. Form — success toast on ?sent=1 redirect
-     ------------------------------------------------------------------ */
-  function initForm() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('sent') === '1') {
-      const toast = document.createElement('div');
-      toast.style.cssText = `
-        position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-        padding: 16px 24px; background: #00ff9d; color: #000;
-        font-family: var(--mono); font-size: 13px; font-weight: 600;
-        border-radius: 6px; box-shadow: 0 12px 40px rgba(0, 255, 157, 0.4);
-        z-index: 100; letter-spacing: 0.05em; text-transform: uppercase;
-      `;
-      const lang = document.documentElement.lang;
-      toast.textContent = lang === 'en'
-        ? '✓ Inquiry sent — reply within 48h.'
-        : '✓ Anfrage gesendet — Antwort binnen 48h.';
-      document.body.appendChild(toast);
-      setTimeout(() => toast.style.opacity = '0', 4500);
-      setTimeout(() => toast.remove(), 5500);
-      history.replaceState(null, '', window.location.pathname + window.location.hash);
-    }
-  }
-
-  /* ------------------------------------------------------------------
-     6. Reveal on scroll
+     5. Reveal on scroll
      ------------------------------------------------------------------ */
   function initReveal() {
     if (prefersReducedMotion || !('IntersectionObserver' in window)) return;
@@ -529,7 +500,6 @@
     initBackground();
     initTilt();
     initGlitch();
-    initForm();
     initReveal();
   });
 })();

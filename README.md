@@ -9,8 +9,9 @@ Live: <https://jbmtp07.github.io/jb-security/>
 ## Stack
 
 - Static HTML / CSS / vanilla JS — no build, deploys straight to GitHub Pages
-- Three.js (r149) for the animated 3D background
-- [Formsubmit](https://formsubmit.co) for the contact form (no signup, no backend)
+- Three.js r149 (self-hosted in `assets/three.min.js`, no CDN — no third-country IP transfer)
+- Bunny Fonts for typography (GDPR-friendly, no IP logging)
+- Contact via prefilled `mailto:` links — no form backend, no third party
 - DE / EN toggle via `data-i18n` attributes
 
 ## Local dev
@@ -25,7 +26,9 @@ Open <http://localhost:8000>.
 
 - `index.html` — page markup
 - `styles.css` — dark hacker / cyberpunk theme
-- `main.js` — Three.js scene, tilt cards, glitch text, i18n, form handling
+- `main.js` — Three.js scene, tilt cards, glitch text, i18n
+- `impressum.html` / `datenschutz.html` — legal pages (§ 5 DDG, Art. 13 GDPR)
+- `assets/three.min.js` — Three.js r149 (self-hosted)
 - `assets/sample-finding.pdf` — anonymized work sample
 
 ## Deployment

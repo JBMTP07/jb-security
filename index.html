@@ -8,7 +8,6 @@
 <title>[JB] Security · Penetration Testing · Web · AD · OT/ICS</title>
 <meta name="description" content="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-de="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-en="Manual penetration testing for web applications, Active Directory, and OT/ICS. 20+ verified findings on HackerOne and Bugcrowd. Reports per OWASP, PTES, NIST SP 800-115, and MITRE ATT&CK." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050507'/%3E%3Cpath d='M11 9h3v10a4 4 0 01-8 0v-1h3v1a1 1 0 002 0V9zm12 0h-7v3h6v3h-6v3h7v3h-10V9h10z' fill='%2300ff9d'/%3E%3C/svg%3E" />
-<link rel="preconnect" href="https://unpkg.com" crossorigin />
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
 <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400,500,700|space-grotesk:400,500,600,700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
@@ -418,40 +417,47 @@
       </p>
     </div>
 
-    <form class="contact-form" id="contactForm" action="https://formsubmit.co/josefbasner@proton.me" method="POST">
-      <input type="hidden" name="_subject" value="[JB] Security — Anfrage über jb-security" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_captcha" value="true" />
-      <input type="hidden" name="_next" value="https://jbmtp07.github.io/jb-security/?sent=1" />
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+    <aside class="contact-card" aria-label="E-Mail-Anfrage">
+      <div class="contact-card-head">
+        <span class="contact-card-tag" data-i18n="mail.tag">// DIREKTE ANFRAGE PER E-MAIL</span>
+        <h3 data-i18n="mail.title">Wähle deinen Anfrage-Typ.</h3>
+        <p data-i18n="mail.body">
+          Ein Klick &mdash; dein Mail-Client öffnet sich mit passendem Betreff und einer
+          Vorlage, die ich für die Auftragsklärung brauche. Keine Drittanbieter,
+          kein Tracking, kein Cookie-Banner.
+        </p>
+      </div>
 
-      <label>
-        <span data-i18n="form.name">Name / Firma</span>
-        <input type="text" name="Name" required autocomplete="name" />
-      </label>
-      <label>
-        <span data-i18n="form.email">E-Mail</span>
-        <input type="email" name="Email" required autocomplete="email" />
-      </label>
-      <label>
-        <span data-i18n="form.type">Art des Engagements</span>
-        <select name="Engagement">
-          <option data-i18n="form.t1">Web Application Pentest</option>
-          <option data-i18n="form.t2">Netzwerk- / AD-Pentest</option>
-          <option data-i18n="form.t3">OT / ICS Security Assessment</option>
-          <option data-i18n="form.t4">Sonstiges / Beratung</option>
-        </select>
-      </label>
-      <label>
-        <span data-i18n="form.msg">Kurzbeschreibung</span>
-        <textarea name="Message" rows="5" required data-i18n-attr-de="Scope, Test-Modus (Black/Grey/White-Box), gewünschter Zeitraum …" data-i18n-attr-en="Scope, test mode (Black/Grey/White-Box), preferred time window …" placeholder="Scope, Test-Modus (Black/Grey/White-Box), gewünschter Zeitraum …"></textarea>
-      </label>
-      <label class="consent">
-        <input type="checkbox" required />
-        <span data-i18n="form.consent">Ich bin damit einverstanden, dass meine Angaben zur Beantwortung verarbeitet werden.</span>
-      </label>
-      <button type="submit" class="btn btn-primary" data-i18n="form.submit">Anfrage senden →</button>
-    </form>
+      <div class="mail-options">
+        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20Web%20Application&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20einen%20Web%20Application%20Pentest%20anfragen.%0A%0AUnternehmen%3A%20%0AAnsprechpartner%3A%20%0A%0AScope%20(Ziel-URL%2Fs%2C%20Anzahl%20Endpunkte)%3A%20%0ATest-Modus%20(Black%20%2F%20Grey%20%2F%20White-Box)%3A%20%0AGew%C3%BCnschter%20Zeitraum%3A%20%0ABesondere%20Anforderungen%20(NDA%20vorab%2C%20Test-Account%2C%20Whitelisting)%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+          <span class="mail-option-tag">WEB</span>
+          <span class="mail-option-title" data-i18n="mail.o1">Web Application Pentest</span>
+          <span class="mail-option-arrow">→</span>
+        </a>
+        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20Netzwerk%20%2F%20Active%20Directory&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20einen%20Netzwerk-%20%2F%20AD-Pentest%20anfragen.%0A%0AUnternehmen%3A%20%0AAnsprechpartner%3A%20%0A%0AScope%20(externe%20%2F%20interne%20IP-Ranges%2C%20Anzahl%20Hosts)%3A%20%0AAD-Domain%20%2F%20Forest%3A%20%0ATest-Modus%20(External%20%2F%20Internal%20%2F%20Assumed%20Breach)%3A%20%0AGew%C3%BCnschter%20Zeitraum%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+          <span class="mail-option-tag">NETWORK</span>
+          <span class="mail-option-title" data-i18n="mail.o2">Netzwerk- / AD-Pentest</span>
+          <span class="mail-option-arrow">→</span>
+        </a>
+        <a class="mail-option highlight" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20OT%20%2F%20ICS%20Security%20Assessment&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20ein%20OT%20%2F%20ICS%20Security%20Assessment%20anfragen.%0A%0AUnternehmen%2FStandort%3A%20%0AAnsprechpartner%20(Engineering%20%2B%20IT)%3A%20%0A%0AAnlagen-Typ%20(SCADA%20%2F%20DCS%20%2F%20PLC%20%2F%20mixed)%3A%20%0AHersteller%20%2F%20Protokolle%20(z.B.%20Siemens%20S7%2C%20Modbus%2C%20OPC%20UA)%3A%20%0APurdue-Level%20im%20Scope%3A%20%0AInvasiv%20oder%20nur%20passiv%3F%3A%20%0AMaintenance-Window%20%2F%20Zeitfenster%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+          <span class="mail-option-tag warn">OT / ICS</span>
+          <span class="mail-option-title" data-i18n="mail.o3">OT / ICS Security Assessment</span>
+          <span class="mail-option-arrow">→</span>
+        </a>
+        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Beratungsanfrage%20%C2%B7%20%5BJB%5D%20Security&amp;body=Hallo%20Josef%2C%0A%0Aich%20habe%20eine%20Anfrage%20zu%3A%0A%0A%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+          <span class="mail-option-tag">SONSTIGES</span>
+          <span class="mail-option-title" data-i18n="mail.o4">Beratung / Sonstiges</span>
+          <span class="mail-option-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="mail-foot">
+        <p data-i18n="mail.foot">
+          Mail-Client nicht eingerichtet? Schreib direkt an
+          <a href="mailto:josefbasner@proton.me"><strong>josefbasner@proton.me</strong></a>.
+        </p>
+      </div>
+    </aside>
   </div>
 </section>
 
@@ -477,7 +483,7 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
+<script src="assets/three.min.js"></script>
 <script src="main.js" defer></script>
 </body>
 </html>
