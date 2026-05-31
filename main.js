@@ -430,6 +430,7 @@
       'nav.contact': 'Kontakt',
 
       'hero.status': 'Verfügbar ab Juli 2026 · Q3-Slots offen',
+      'hero.cert': 'CompTIA Security+ (SY0-701) · zertifiziert 05/2026',
       'hero.title1': 'Offensive Security.',
       'hero.title2': 'Ich finde, was Scanner übersehen.',
       'hero.sub': '20+ verifizierte Findings über HackerOne & Bugcrowd · Bug Bounty seit 2020. Manuelle Pentests für Web, Active Directory und OT/ICS — mit Reports, die der Vorstand versteht und das Engineering umsetzen kann.',
@@ -509,7 +510,7 @@
       'about.p2': 'Hintergrund aus dem industriellen Umfeld — ich verstehe, dass eine SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.',
       'about.stat1': 'IT-Berufshaftpflicht inkl. Hacker-Klausel',
       'about.stat2': 'Verifizierte Findings auf H1 & Bugcrowd',
-      'about.stat3': 'Pentester · OT/ICS · Anklam & remote',
+      'about.stat3': 'CompTIA Security+ (SY0-701) · 05/2026',
 
       'contact.kicker': '// KONTAKT',
       'contact.title': 'Engagement anfragen.',
@@ -538,6 +539,7 @@
       'nav.contact': 'Contact',
 
       'hero.status': 'Available from July 2026 · Q3 slots open',
+      'hero.cert': 'CompTIA Security+ (SY0-701) · certified 05/2026',
       'hero.title1': 'Offensive Security.',
       'hero.title2': 'I find what scanners miss.',
       'hero.sub': '20+ verified findings on HackerOne & Bugcrowd · bug bounty hunter since 2020. Manual penetration testing for web, Active Directory, and OT/ICS — with reports the board understands and engineering can act on.',
@@ -617,7 +619,7 @@
       'about.p2': 'Background in industrial environments — I understand that a PLC controller wasn\'t built for "let\'s just patch it real quick".',
       'about.stat1': 'IT professional liability incl. hacker clause',
       'about.stat2': 'Verified findings on H1 & Bugcrowd',
-      'about.stat3': 'Pentester · OT/ICS · Anklam & remote',
+      'about.stat3': 'CompTIA Security+ (SY0-701) · 05/2026',
 
       'contact.kicker': '// CONTACT',
       'contact.title': 'Request an engagement.',
@@ -692,6 +694,7 @@
   const TERM_LINES = [
     { cmd: 'whoami', out: 'josef_basner' },
     { cmd: 'id', out: 'uid=1337(pentester) groups=ot_ics,web_app,network,bugbounty' },
+    { cmd: 'cat /etc/certs', out: 'CompTIA Security+ (SY0-701) · bestanden 05/2026 · CEH v13 + PenTest+ in Vorbereitung' },
     { cmd: 'cat /etc/standards', out: 'OWASP · PTES · NIST SP 800-115 · MITRE ATT&CK · IEC 62443' },
     { cmd: 'ls -la /skills/', out: [
         'drwxr-xr-x  josef  ot-ics/        modbus, opc-ua, s7, profinet',

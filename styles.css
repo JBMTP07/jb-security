@@ -171,6 +171,12 @@ em { font-style: normal; color: var(--neon); }
   position: relative;
 }
 
+.hero-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
 .hero-meta {
   display: inline-flex;
   align-items: center;
@@ -181,9 +187,25 @@ em { font-style: normal; color: var(--neon); }
   font-family: var(--mono);
   font-size: 12px;
   color: var(--text-dim);
-  margin-bottom: 32px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
+}
+.hero-meta.cert {
+  border-color: rgba(0, 255, 157, 0.35);
+  color: var(--neon);
+  background: rgba(0, 255, 157, 0.06);
+}
+.hero-meta.cert .cert-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--neon);
+  color: #000;
+  font-size: 9px;
+  font-weight: 700;
 }
 
 .dot {
