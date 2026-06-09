@@ -7,6 +7,47 @@
 <meta name="theme-color" content="#050507" />
 <title>[JB] Security · Penetration Testing · Web · AD · OT/ICS</title>
 <meta name="description" content="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-de="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-en="Manual penetration testing for web applications, Active Directory, and OT/ICS. 20+ verified findings on HackerOne and Bugcrowd. Reports per OWASP, PTES, NIST SP 800-115, and MITRE ATT&CK." />
+<link rel="canonical" href="https://jb-security.de/" />
+<meta property="og:title" content="[JB] Security · Penetration Testing · Web · AD · OT/ICS" />
+<meta property="og:description" content="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://jb-security.de/" />
+<meta property="og:site_name" content="[JB] Security" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:image" content="https://jb-security.de/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="[JB] Security · Penetration Testing" />
+<meta name="twitter:description" content="Manuelle Pentests für Web, Active Directory und OT/ICS — Reports nach OWASP, PTES, NIST und MITRE ATT&CK." />
+<meta name="twitter:image" content="https://jb-security.de/assets/og.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "[JB] Security",
+  "url": "https://jb-security.de/",
+  "image": "https://jb-security.de/assets/og.png",
+  "description": "Manuelle Penetrationstests für Web Applications, Active Directory und OT/ICS nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK.",
+  "founder": {
+    "@type": "Person",
+    "name": "Josef Roland Basner",
+    "jobTitle": "Penetration Tester",
+    "sameAs": ["https://github.com/JBMTP07", "https://jbmtp07.github.io/"]
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Dr.-Külz-Straße 8a",
+    "postalCode": "17389",
+    "addressLocality": "Anklam",
+    "addressCountry": "DE"
+  },
+  "email": "josefbasner@proton.me",
+  "telephone": "+4915144957240",
+  "areaServed": ["DE", "AT", "CH"],
+  "knowsAbout": ["Penetration Testing", "Web Application Security", "Active Directory Security", "OT/ICS Security", "SCADA Security"]
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050507'/%3E%3Cpath d='M11 9h3v10a4 4 0 01-8 0v-1h3v1a1 1 0 002 0V9zm12 0h-7v3h6v3h-6v3h7v3h-10V9h10z' fill='%2300ff9d'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
 <link href="https://fonts.bunny.net/css?family=instrument-serif:400,400i|jetbrains-mono:400,500,700|space-grotesk:400,500,600,700&display=swap" rel="stylesheet" />
@@ -18,6 +59,7 @@
 <canvas id="bgfx" aria-hidden="true"></canvas>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="grid-overlay" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <!-- Top nav -->
 <header class="nav">
@@ -25,7 +67,7 @@
     <span class="brand-mark">JB</span>
     <span class="brand-name">[JB] <em>Security</em></span>
   </a>
-  <nav class="nav-links" aria-label="Hauptnavigation">
+  <nav class="nav-links" id="mobileNav" aria-label="Hauptnavigation">
     <a href="#services" data-i18n="nav.services">Leistungen</a>
     <a href="#methodik" data-i18n="nav.methodik">Methodik</a>
     <a href="#sample" data-i18n="nav.sample">Sample Report</a>
@@ -37,6 +79,9 @@
       <span data-lang="de" class="active">DE</span>
       <span class="lang-sep">/</span>
       <span data-lang="en">EN</span>
+    </button>
+    <button class="burger" id="navBurger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
     </button>
   </div>
 </header>
@@ -343,8 +388,8 @@
         Penetration Tester und Security Researcher mit Schwerpunkt auf
         Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als
         Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv &mdash; 20+ verifizierte
-        Findings auf öffentlichen Programmen, Schwerpunkt Business-Logic-Flaws
-        und Exploit-Chains.
+        Findings in privaten / invite-only Programmen, Schwerpunkt
+        Business-Logic-Flaws und Exploit-Chains.
       </p>
       <p data-i18n="about.p2">
         Hintergrund aus dem industriellen Umfeld &mdash; ich verstehe, dass eine
@@ -483,6 +528,8 @@
       <span data-i18n="footer.kleinunt">Kleinunternehmer § 19 UStG</span>
       <span>·</span>
       <a href="https://github.com/JBMTP07" target="_blank" rel="noopener">github.com/JBMTP07</a>
+      <span>·</span>
+      <a href="https://jbmtp07.github.io/" target="_blank" rel="noopener" data-i18n="footer.portfolio">Portfolio</a>
       <span>·</span>
       <span data-i18n="footer.year">© 2026</span>
     </div>

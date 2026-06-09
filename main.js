@@ -506,7 +506,7 @@
 
       'about.kicker': '// ÜBER',
       'about.title': 'Josef <i class="serif">Roland</i> Basner',
-      'about.p1': 'Penetration Tester und Security Researcher mit Schwerpunkt auf Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv — 20+ verifizierte Findings auf öffentlichen Programmen, Schwerpunkt Business-Logic-Flaws und Exploit-Chains.',
+      'about.p1': 'Penetration Tester und Security Researcher mit Schwerpunkt auf Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv — 20+ verifizierte Findings in privaten / invite-only Programmen, Schwerpunkt Business-Logic-Flaws und Exploit-Chains.',
       'about.p2': 'Hintergrund aus dem industriellen Umfeld — ich verstehe, dass eine SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.',
       'about.stat1': 'IT-Berufshaftpflicht inkl. Hacker-Klausel',
       'about.stat2': 'Verifizierte Findings auf H1 & Bugcrowd',
@@ -529,6 +529,7 @@
       'footer.kleinunt': 'Kleinunternehmer § 19 UStG',
       'footer.impressum': 'Impressum',
       'footer.datenschutz': 'Datenschutz',
+      'footer.portfolio': 'Portfolio',
       'footer.year': '© 2026',
     },
     en: {
@@ -615,7 +616,7 @@
 
       'about.kicker': '// ABOUT',
       'about.title': 'Josef <i class="serif">Roland</i> Basner',
-      'about.p1': 'Penetration tester and security researcher focused on web application security, Active Directory, and OT/ICS. Active bug bounty hunter on HackerOne and Bugcrowd since 2020 — 20+ verified findings on public programs, with a focus on business-logic flaws and chained exploits.',
+      'about.p1': 'Penetration tester and security researcher focused on web application security, Active Directory, and OT/ICS. Active bug bounty hunter on HackerOne and Bugcrowd since 2020 — 20+ verified findings in private / invite-only programs, with a focus on business-logic flaws and chained exploits.',
       'about.p2': 'Background in industrial environments — I understand that a PLC controller wasn\'t built for "let\'s just patch it real quick".',
       'about.stat1': 'IT professional liability incl. hacker clause',
       'about.stat2': 'Verified findings on H1 & Bugcrowd',
@@ -638,6 +639,7 @@
       'footer.kleinunt': 'Small business · § 19 UStG (DE)',
       'footer.impressum': 'Legal notice',
       'footer.datenschutz': 'Privacy',
+      'footer.portfolio': 'Portfolio',
       'footer.year': '© 2026',
     },
   };
@@ -882,6 +884,45 @@
     els.forEach((el) => io.observe(el));
   }
 
+  /* ------------------------------------------------------------------
+     Mobile nav (burger)
+     ------------------------------------------------------------------ */
+  function initNav() {
+    const burger = document.getElementById('navBurger');
+    const links = document.getElementById('mobileNav');
+    if (!burger || !links) return;
+    burger.addEventListener('click', () => {
+      const open = links.classList.toggle('is-open');
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+    });
+    links.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        links.classList.remove('is-open');
+        burger.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      })
+    );
+  }
+
+  /* ------------------------------------------------------------------
+     Scroll progress bar
+     ------------------------------------------------------------------ */
+  function initProgress() {
+    const bar = document.getElementById('progress');
+    if (!bar) return;
+    let ticking = false;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  }
+
   /* ---- Init ---- */
   document.addEventListener('DOMContentLoaded', () => {
     initLang();
@@ -894,5 +935,7 @@
     initCounters();
     initChain();
     initReveal();
+    initNav();
+    initProgress();
   });
 })();

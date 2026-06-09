@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.bunny.net/css?family=instrument-serif:400i|jetbrains-mono:400,500,700|space-grotesk:500,600,700" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#050507;overflow:hidden;position:relative;
+     font-family:"Space Grotesk",sans-serif;color:#e6e8ee}
+.grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,255,157,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,255,157,.05) 1px,transparent 1px);
+  background-size:64px 64px}
+.glow1{position:absolute;width:760px;height:760px;left:-240px;top:-320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,157,.12),transparent 65%)}
+.glow2{position:absolute;width:720px;height:720px;right:-240px;bottom:-340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,.10),transparent 65%)}
+.frame{position:absolute;inset:46px;border:1px solid rgba(0,255,157,.2)}
+.corner{position:absolute;width:42px;height:42px;border-color:#00ff9d;opacity:.85}
+.c1{left:60px;top:60px;border-left:3px solid;border-top:3px solid}
+.c2{right:60px;bottom:60px;border-right:3px solid;border-bottom:3px solid}
+.inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 110px}
+.brand{display:flex;align-items:center;gap:18px;margin-bottom:30px}
+.mark{width:62px;height:62px;background:#00ff9d;color:#000;display:flex;align-items:center;justify-content:center;
+  font-family:"JetBrains Mono",monospace;font-weight:700;font-size:26px;border-radius:10px;
+  box-shadow:0 0 32px rgba(0,255,157,.55)}
+.bname{font-size:30px;font-weight:700}.bname em{font-style:normal;color:#00ff9d}
+h1{font-size:62px;font-weight:700;line-height:1.04;letter-spacing:-.01em}
+h1 .accent{color:#00ff9d;text-shadow:0 0 38px rgba(0,255,157,.45)}
+h1 .serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+.sub{font-family:"JetBrains Mono",monospace;font-size:24px;color:#9aa0aa;margin-top:26px;letter-spacing:.02em}
+.sub b{color:#00d4ff;font-weight:500}
+.chips{display:flex;gap:16px;margin-top:32px;font-family:"JetBrains Mono",monospace;font-size:20px}
+.chip{padding:10px 22px;white-space:nowrap;letter-spacing:.06em;border-radius:5px}
+.chip.g{border:1.5px solid rgba(0,255,157,.55);color:#00ff9d;background:rgba(0,255,157,.07)}
+.chip.b{border:1.5px solid rgba(0,212,255,.5);color:#00d4ff;background:rgba(0,212,255,.06)}
+.url{position:absolute;bottom:60px;right:120px;font-family:"JetBrains Mono",monospace;font-size:22px;color:#9aa0aa;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="grid"></div><div class="glow1"></div><div class="glow2"></div>
+<div class="frame"></div><div class="corner c1"></div><div class="corner c2"></div>
+<div class="inner">
+  <div class="brand"><div class="mark">JB</div><div class="bname">[JB] <em>Security</em></div></div>
+  <h1>Offensive Security.<br><span class="accent">Ich finde, was <span class="serif">Scanner</span> übersehen.</span></h1>
+  <div class="sub">Manuelle Pentests · <b>Web</b> · <b>Active Directory</b> · <b>OT/ICS</b></div>
+  <div class="chips">
+    <span class="chip g">OWASP · PTES · NIST · MITRE</span>
+    <span class="chip b">20+ VERIFIZIERTE FINDINGS</span>
+  </div>
+</div>
+<div class="url">jb-security.de</div>
+</body>
+</html>
