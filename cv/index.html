@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Josef Basner — Penetration Tester · CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--panel:#121212;--panel2:#171717;--acc:#ff2323;--ink:#ededed;--dim:#8a8a8a;--mute:#5f5f5f;--line:rgba(237,237,237,.12);--mono:"Space Mono",monospace;--body:"Archivo",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acc);color:#fff}
+/* ambient */
+.scan{position:fixed;inset:0;z-index:60;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+.sweep{position:fixed;left:0;right:0;height:2px;background:var(--acc);opacity:.4;z-index:61;pointer-events:none;animation:sweepY 5s linear infinite}
+@keyframes sweepY{0%{top:-4px}100%{top:100%}}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:70;box-shadow:0 0 12px var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px}
+/* top bar */
+.tape{background:var(--acc);color:#1a0000;font:700 12px var(--mono);letter-spacing:.16em;padding:9px 0;overflow:hidden;white-space:nowrap}
+.tape span{display:inline-block;animation:marq 20s linear infinite}
+@keyframes marq{to{transform:translateX(-50%)}}
+.bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:rgba(10,10,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;font:700 18px var(--mono);letter-spacing:.06em}
+.logo .mk{display:inline-flex;align-items:center;justify-content:center;width:38px;height:26px;background:var(--acc)}
+.logo .mk b{background:var(--bg);color:var(--ink);font:700 12px var(--mono);padding:2px 5px}
+.logo i{font-style:normal;color:var(--acc)}
+.cur{color:var(--acc);animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.tools{display:flex;align-items:center;gap:10px}
+.lang{font:700 12px var(--mono);letter-spacing:.1em;border:1px solid var(--line);background:transparent;color:var(--dim);padding:8px 12px;cursor:pointer;transition:.2s}
+.lang:hover{border-color:var(--acc);color:var(--ink)}
+.lang b{color:var(--acc)}
+.dl{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--acc);color:#fff;padding:9px 16px;transition:.2s}
+.dl:hover{box-shadow:0 0 20px rgba(255,35,35,.5)}
+/* hero */
+.hero{padding:66px 0 48px;border-bottom:1px solid var(--line)}
+.stamp{display:inline-flex;align-items:center;gap:9px;font:700 11px var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc);padding:7px 13px}
+.stamp .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 1.4s steps(2) infinite}
+h1{font-family:var(--mono);font-weight:700;font-size:clamp(42px,7vw,74px);line-height:.98;letter-spacing:-.02em;margin:22px 0 6px;position:relative;display:inline-block}
+h1 .g{position:relative;display:inline-block}
+h1 .g::before,h1 .g::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden;pointer-events:none}
+h1 .g::before{color:var(--acc);animation:g1 3.2s steps(1) infinite;clip-path:inset(8% 0 58% 0)}
+h1 .g::after{color:#39d0ff;animation:g2 3.2s steps(1) infinite;clip-path:inset(62% 0 6% 0)}
+@keyframes g1{0%,90%,100%{transform:none;opacity:0}92%{transform:translate(-4px,1px);opacity:1}95%{transform:translate(3px,-1px);opacity:1}98%{opacity:0}}
+@keyframes g2{0%,91%,100%{transform:none;opacity:0}93%{transform:translate(4px,-1px);opacity:1}96%{transform:translate(-3px,1px);opacity:1}99%{opacity:0}}
+.role{font:700 17px var(--mono);letter-spacing:.04em;color:var(--dim);margin-bottom:24px}
+.role b{color:var(--acc);font-weight:700}
+.contact{display:flex;flex-wrap:wrap;gap:10px 22px;font:400 14px var(--mono);color:var(--dim)}
+.contact a{display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.contact a:hover{color:var(--acc)}
+.contact .ic{color:var(--acc)}
+/* section */
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.sh .num{font:700 12px var(--mono);color:var(--acc);border:1px solid rgba(255,35,35,.4);padding:4px 8px}
+.sh h2{font-family:var(--mono);font-weight:700;font-size:22px;letter-spacing:.02em;text-transform:uppercase}
+.sh .rule{flex:1;height:1px;background:var(--line)}
+.lead{font-size:16px;color:#cfcfcf;max-width:70ch}
+.lead b{color:var(--ink);font-weight:600}
+/* terminal profile */
+.term{background:#070707;border:1px solid var(--line);margin-top:4px}
+.term .tb{display:flex;align-items:center;gap:7px;padding:10px 13px;border-bottom:1px solid var(--line)}
+.term .tb i{width:10px;height:10px;border-radius:50%;background:#2a2a2a}
+.term .tb i:first-child{background:var(--acc)}
+.term .tt{margin-left:auto;font:400 11px var(--mono);color:var(--mute)}
+.term .tbody{padding:20px 22px;font:400 13.5px/1.85 var(--mono);color:#d6d6d6}
+.term .p{color:var(--acc)}.term .o{color:var(--dim)}
+/* grids */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{background:var(--panel);border:1px solid var(--line);padding:22px 22px 24px;position:relative;transition:.2s}
+.card:hover{border-color:rgba(255,35,35,.4)}
+.card h3{font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font:400 12px var(--mono);color:var(--dim);border:1px solid var(--line);padding:5px 9px;background:var(--panel2);transition:.2s}
+.tag:hover{color:var(--ink);border-color:var(--acc)}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:8px}
+.stats>div{background:var(--bg);padding:22px 20px}
+.stats .n{font:700 34px var(--mono);color:var(--acc);line-height:1}
+.stats .l{font:400 11px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+/* experience list */
+.xp{display:flex;flex-direction:column;gap:0}
+.item{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .when{font:400 13px var(--mono);color:var(--acc)}
+.item .what h4{font-size:17px;font-weight:700;margin-bottom:2px}
+.item .what .org{font:400 13px var(--mono);color:var(--dim);margin-bottom:10px}
+.item .what ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.item .what li{position:relative;padding-left:18px;font-size:14.5px;color:#cbcbcb}
+.item .what li::before{content:"▸";position:absolute;left:0;color:var(--acc)}
+.redb{background:var(--acc);color:var(--acc);padding:0 7px;border-radius:2px;cursor:default;transition:color .15s;font-family:var(--mono)}
+.redb:hover,.redb.reveal{color:#fff}
+/* roadmap — cert cards */
+.road{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.road li{position:relative;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--mute);padding:18px 20px 20px;transition:.2s}
+.road li:hover{border-color:rgba(255,35,35,.35)}
+.road li.done{border-left-color:var(--acc)}
+.road li.sched{border-left-color:#39d0ff}
+.road .st{display:inline-block;font:700 10px var(--mono);letter-spacing:.16em;padding:4px 9px;margin-bottom:16px}
+.road li.done .st{color:var(--acc);border:1px solid rgba(255,35,35,.5)}
+.road li.sched .st{color:#39d0ff;border:1px solid rgba(57,208,255,.4)}
+.road li.plan .st{color:var(--mute);border:1px solid var(--line)}
+.road h4{font:700 16px var(--body);margin:0;line-height:1.3}
+.road .code{font:400 12px var(--mono);color:var(--dim)}
+.road .date{font:400 12px var(--mono);color:var(--dim);margin-top:8px}
+.langs{display:flex;flex-wrap:wrap;gap:26px}
+.langs div .n{font:700 16px var(--body)}
+.langs div .lv{font:400 12px var(--mono);color:var(--dim)}
+footer{padding:34px 0 60px;text-align:center;font:400 12px var(--mono);color:var(--mute);letter-spacing:.06em}
+footer .top{height:4px;max-width:200px;margin:0 auto 20px;background:repeating-linear-gradient(-45deg,var(--acc) 0 8px,transparent 8px 16px);opacity:.6}
+[data-en]{display:none}
+html[data-lang="en"] [data-de]{display:none}
+html[data-lang="en"] [data-en]{display:revert}
+@media(max-width:720px){.two,.stats{grid-template-columns:1fr}.item{grid-template-columns:1fr;gap:6px}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="scan"></div><div class="sweep"></div><div class="prog" id="prog"></div>
+
+<div class="tape"><span>&nbsp;OPEN TO WORK ⁄⁄ PENETRATION TESTER ⁄⁄ REMOTE EU ⁄⁄ 20+ VERIFIED FINDINGS ⁄⁄ SECURITY+ CERTIFIED ⁄⁄ OT/ICS BACKGROUND ⁄⁄ OPEN TO WORK ⁄⁄ PENETRATION TESTER ⁄⁄ REMOTE EU ⁄⁄ 20+ VERIFIED FINDINGS ⁄⁄ SECURITY+ CERTIFIED ⁄⁄ OT/ICS BACKGROUND ⁄⁄&nbsp;</span></div>
+
+<div class="bar">
+  <a class="logo" href="#top"><span class="mk"><b>JB</b></span>JB<i>//</i>SEC<span class="cur">_</span></a>
+  <div class="tools">
+    <button class="lang" id="lang"><b>DE</b> / EN</button>
+    <a class="dl" id="dl" href="print.html" target="_blank"><span data-de>PDF ↓</span><span data-en>PDF ↓</span></a>
+  </div>
+</div>
+
+<main id="top">
+<div class="wrap">
+
+<header class="hero">
+  <span class="stamp"><span class="dot"></span><span data-de>Open to Work · Junior / Trainee · Remote EU</span><span data-en>Open to Work · Junior / Trainee · Remote EU</span></span>
+  <h1><span class="g" data-t="JOSEF BASNER">JOSEF BASNER</span></h1>
+  <p class="role"><span data-de>Penetration Tester <b>·</b> Security Researcher</span><span data-en>Penetration Tester <b>·</b> Security Researcher</span></p>
+  <div class="contact">
+    <a href="mailto:josefbasner@proton.me"><span class="ic">@</span> josefbasner@proton.me</a>
+    <a href="tel:+4915144957240"><span class="ic">☎</span> +49 151 4495 7240</a>
+    <a href="https://github.com/JBMTP07" target="_blank"><span class="ic">◇</span> github.com/JBMTP07</a>
+    <a href="https://www.linkedin.com/in/josef-basner-23a3173b2/" target="_blank"><span class="ic">in</span> linkedin.com/in/josef-basner</a>
+    <span><span class="ic">▣</span> <span data-de>Deutschland · Remote (EU)</span><span data-en>Germany · Remote (EU)</span></span>
+  </div>
+</header>
+
+<section>
+  <div class="sh"><span class="num">01</span><h2><span data-de>Profil</span><span data-en>Profile</span></h2><span class="rule"></span></div>
+  <div class="term">
+    <div class="tb"><i></i><i></i><i></i><span class="tt">~/whoami.sh</span></div>
+    <div class="tbody">
+      <p><span class="p">josef@sec</span>:~$ cat profile.txt</p>
+      <p class="o" data-de>Offensive-Security-Spezialist mit 5+ Jahren Praxis in Bug Bounty, Web-/API-Pentesting und Active-Directory-Angriffen. Seit 2020 in privaten / invite-only Programmen auf HackerOne und Bugcrowd — 20+ verifizierte Schwachstellen (RCE, SQLi, XSS, IDOR, Auth-Bypass), Schwerpunkt Business-Logic und Exploit-Chains. CompTIA Security+ (SY0-701) zertifiziert. Eigenes Security-Lab, dokumentierte Methodik, laufender Zertifizierungspfad (PenTest+, CEH v13, OSCP für Q4 2026). Zusätzlich ausgebildeter Mechatroniker (Siemens S7, SCADA) — direkter Zugang zu OT/ICS-Security.</p>
+      <p class="o" data-en>Offensive-security specialist with 5+ years of hands-on experience in bug bounty, web/API penetration testing and Active Directory attacks. Active since 2020 in private / invite-only programs on HackerOne and Bugcrowd — 20+ verified vulnerabilities (RCE, SQLi, XSS, IDOR, auth bypass), focused on business-logic flaws and exploit chains. CompTIA Security+ (SY0-701) certified. Own security lab, documented methodology, certification path in progress (PenTest+, CEH v13, OSCP planned Q4 2026). Also a trained mechatronics engineer (Siemens S7, SCADA) — a direct route into OT/ICS security.</p>
+      <p><span class="p">josef@sec</span>:~$ <span class="cur">_</span></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="num">02</span><h2><span data-de>Highlights</span><span data-en>Highlights</span></h2><span class="rule"></span></div>
+  <div class="stats">
+    <div><div class="n"><span data-count="20">0</span>+</div><div class="l"><span data-de>Verifizierte Findings · privat/NDA</span><span data-en>Verified findings · private/NDA</span></div></div>
+    <div><div class="n"><span data-count="5">0</span>+</div><div class="l"><span data-de>Jahre offensive Praxis</span><span data-en>Years offensive practice</span></div></div>
+    <div><div class="n">Sec+</div><div class="l"><span data-de>CompTIA · SY0-701</span><span data-en>CompTIA · SY0-701</span></div></div>
+    <div><div class="n">OT/ICS</div><div class="l"><span data-de>Siemens S7 · SCADA</span><span data-en>Siemens S7 · SCADA</span></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="num">03</span><h2><span data-de>Technische Schwerpunkte</span><span data-en>Technical Skills</span></h2><span class="rule"></span></div>
+  <div class="two">
+    <div class="card"><h3><span data-de>Offensive Security</span><span data-en>Offensive Security</span></h3><div class="tags"><span class="tag">Penetration Testing</span><span class="tag">Web &amp; API Testing</span><span class="tag">Bug Bounty</span><span class="tag">Recon &amp; Enumeration</span><span class="tag">Privilege Escalation</span><span class="tag">AD Attacks</span><span class="tag">Lateral Movement</span><span class="tag">Post-Exploitation</span></div></div>
+    <div class="card"><h3>Tools</h3><div class="tags"><span class="tag">Burp Suite Pro</span><span class="tag">Metasploit</span><span class="tag">Nmap</span><span class="tag">BloodHound</span><span class="tag">CrackMapExec</span><span class="tag">Impacket</span><span class="tag">ffuf</span><span class="tag">sqlmap</span><span class="tag">Wireshark</span><span class="tag">Hydra</span><span class="tag">Nessus</span></div></div>
+    <div class="card"><h3>Scripting</h3><div class="tags"><span class="tag">Python</span><span class="tag">Bash</span><span class="tag">PowerShell</span><span class="tag">JavaScript</span></div></div>
+    <div class="card"><h3>OT / ICS</h3><div class="tags"><span class="tag">Siemens S7 (PLC)</span><span class="tag">SCADA</span><span class="tag"><span data-de>Industriesteuerungen</span><span data-en>Industrial control systems</span></span><span class="tag"><span data-de>Feldbusse</span><span data-en>Fieldbuses</span></span><span class="tag">IT/OT</span></div></div>
+    <div class="card"><h3><span data-de>Netzwerke</span><span data-en>Networking</span></h3><div class="tags"><span class="tag">TCP/IP</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">Subnetting</span><span class="tag">Routing</span><span class="tag">Firewalls</span></div></div>
+    <div class="card"><h3><span data-de>Systeme</span><span data-en>Systems</span></h3><div class="tags"><span class="tag">Kali Linux</span><span class="tag">Parrot OS</span><span class="tag">Windows Server</span><span class="tag">Active Directory</span><span class="tag">Docker</span></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="num">04</span><h2><span data-de>Security-Erfahrung</span><span data-en>Security Experience</span></h2><span class="rule"></span></div>
+  <div class="xp">
+    <div class="item">
+      <div class="when"><span data-de>seit 2020</span><span data-en>since 2020</span></div>
+      <div class="what">
+        <h4><span data-de>Bug Bounty Researcher</span><span data-en>Bug Bounty Researcher</span></h4>
+        <div class="org">HackerOne · Bugcrowd · <span data-de>privat / invite-only</span><span data-en>private / invite-only</span></div>
+        <ul>
+          <li data-de>20+ bestätigte Schwachstellen: RCE, SQL-Injection, Stored/Reflected XSS, IDOR, Auth-Bypass, Business-Logic-Flaws</li>
+          <li data-en>20+ verified vulnerabilities: RCE, SQL injection, stored/reflected XSS, IDOR, auth bypass, business-logic flaws</li>
+          <li data-de>Schwerpunkt Web- &amp; API-Schwachstellen, Recon-Automatisierung, Token-Analyse, Exploit-Chains</li>
+          <li data-en>Focus on web &amp; API vulnerabilities, recon automation, token analysis, exploit chains</li>
+          <li data-de>Ziele: <span class="redb">████████ CLASSIFIED ████</span> — vollständige NDA- &amp; Responsible-Disclosure-Einhaltung, reproduzierbare PoC-Reports</li>
+          <li data-en>Targets: <span class="redb">████████ CLASSIFIED ████</span> — full NDA &amp; responsible-disclosure compliance, reproducible PoC reports</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item">
+      <div class="when"><span data-de>laufend</span><span data-en>ongoing</span></div>
+      <div class="what">
+        <h4>HackTheBox · <span data-de>Eigenes Security-Lab</span><span data-en>Own Security Lab</span></h4>
+        <div class="org">Recon → Enumerate → Exploit → Escalate → Report</div>
+        <ul>
+          <li data-de>Öffentliche deutschsprachige Writeups für retired Machines · github.com/JBMTP07/HTB-Writeups</li>
+          <li data-en>Public write-ups of full attack chains for retired machines · github.com/JBMTP07/HTB-Writeups</li>
+          <li data-de>Isoliertes Testlabor: Raspberry Pi, Metasploitable, Vulnerable VMs, eigene AD-Domäne</li>
+          <li data-en>Isolated test lab: Raspberry Pi, Metasploitable, vulnerable VMs, own AD domain</li>
+          <li data-de>Veröffentlichte Methodik-Sammlung (Linux PrivEsc, AD-Angriffe, Burp-Workflow) · github.com/JBMTP07/Study-Notes</li>
+          <li data-en>Published methodology notes (Linux PrivEsc, AD attacks, Burp workflow) · github.com/JBMTP07/Study-Notes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item">
+      <div class="when"><span data-de>seit 2024</span><span data-en>since 2024</span></div>
+      <div class="what">
+        <h4><span data-de>Gastredner — KI &amp; Cybersecurity</span><span data-en>Guest Speaker — AI &amp; Cybersecurity</span></h4>
+        <div class="org"><span data-de>Ehrenamtlich · 8 Schulen</span><span data-en>Volunteer · 8 schools</span></div>
+        <ul>
+          <li data-de>Vorträge zu LLMs, KI-Sicherheitsrisiken, Phishing und Cybersecurity-Grundlagen für Schüler:innen &amp; Lehrkräfte</li>
+          <li data-en>Talks on LLMs, AI security risks, phishing and cybersecurity fundamentals for students &amp; teachers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="num">05</span><h2><span data-de>Zertifizierungen</span><span data-en>Certifications</span></h2><span class="rule"></span></div>
+  <p class="lead" style="margin-bottom:22px"><span data-de>Kurse abgeschlossen über New Horizons (zertifizierter Bildungsträger). Security+ bestanden — weitere Prüfungen folgen 2026.</span><span data-en>Courses completed via New Horizons (accredited training provider). Security+ passed — further exams follow in 2026.</span></p>
+  <ol class="road">
+    <li class="done"><span class="st"><span data-de>BESTANDEN</span><span data-en>PASSED</span></span><h4>CompTIA Security+ <span class="code">SY0-701</span></h4><div class="date">05/2026</div></li>
+    <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>CompTIA PenTest+</h4><div class="date">2026</div></li>
+    <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>EC-Council CEH <span class="code">v13</span></h4><div class="date">2026</div></li>
+    <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>CompTIA Network+ / Linux+</h4><div class="date">2026</div></li>
+    <li class="plan"><span class="st"><span data-de>GEPLANT</span><span data-en>PLANNED</span></span><h4>OffSec OSCP</h4><div class="date">Q4 2026</div></li>
+  </ol>
+</section>
+
+<section>
+  <div class="sh"><span class="num">06</span><h2><span data-de>Werdegang</span><span data-en>Work Experience</span></h2><span class="rule"></span></div>
+  <div class="xp">
+    <div class="item"><div class="when"><span data-de>seit 01/2025</span><span data-en>since 01/2025</span></div><div class="what"><h4><span data-de>Selbstständig</span><span data-en>Self-employed</span></h4><div class="org"><span data-de>Freiberuflich — parallel zur Cybersecurity-Weiterbildung &amp; aktivem Bug Bounty</span><span data-en>Freelance — alongside continuous cybersecurity training &amp; active bug bounty</span></div></div></div>
+    <div class="item"><div class="when">2023</div><div class="what"><h4><span data-de>Mechatroniker</span><span data-en>Mechatronics Engineer</span></h4><div class="org">Rotan GmbH</div><ul><li data-de>Wartung, Instandhaltung &amp; Fehlerdiagnose industrieller Anlagen — praktische OT-Berührungspunkte</li><li data-en>Maintenance, servicing &amp; fault diagnosis of industrial plants — hands-on OT exposure</li></ul></div></div>
+    <div class="item"><div class="when">2023</div><div class="what"><h4><span data-de>Stellv. Teamleiter</span><span data-en>Deputy Team Lead</span></h4><div class="org">Avedo Rostock</div><ul><li data-de>Operative Führung, Teamkoordination, Qualitätssicherung, Eskalationsmanagement</li><li data-en>Operational leadership, team coordination, QA, escalation management</li></ul></div></div>
+    <div class="item"><div class="when">2018–2022</div><div class="what"><h4><span data-de>Ausbildung Mechatroniker</span><span data-en>Apprenticeship — Mechatronics</span></h4><div class="org">Consun Beet Company</div><ul><li data-de>SPS-Programmierung (Siemens S7), SCADA-Systeme, Industrieautomation, Messtechnik — direkter Bezug zu OT/ICS-Security</li><li data-en>PLC programming (Siemens S7), SCADA systems, industrial automation, instrumentation — direct link to OT/ICS security</li></ul></div></div>
+  </div>
+</section>
+
+<section style="border-bottom:0">
+  <div class="sh"><span class="num">07</span><h2><span data-de>Sprachen &amp; Bildung</span><span data-en>Languages &amp; Education</span></h2><span class="rule"></span></div>
+  <div class="two">
+    <div class="card">
+      <h3><span data-de>Sprachen</span><span data-en>Languages</span></h3>
+      <div class="langs">
+        <div><div class="n">Deutsch</div><div class="lv"><span data-de>Muttersprache</span><span data-en>Native</span></div></div>
+        <div><div class="n">English</div><div class="lv"><span data-de>Fließend (technisch)</span><span data-en>Fluent (technical)</span></div></div>
+        <div><div class="n">Русский</div><div class="lv"><span data-de>Grundkenntnisse</span><span data-en>Basic</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span data-de>Ausbildung</span><span data-en>Education</span></h3>
+      <div style="font-size:15px"><b><span data-de>Berufsausbildung Mechatroniker</span><span data-en>Vocational training — Mechatronics Engineer</span></b><div class="org" style="margin-top:4px">Consun Beet Company · 2018–2022</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<footer>
+  <div class="top"></div>
+  <p><span data-de>Josef Roland Basner · 2026 · Kein Tracking, keine Cookies · Stand Mai 2026</span><span data-en>Josef Roland Basner · 2026 · No tracking, no cookies · Last updated May 2026</span></p>
+</footer>
+</main>
+
+<script>
+// scroll progress
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('prog').style.width=p+'%'});
+// count up
+const runCounts=()=>document.querySelectorAll('[data-count]').forEach(el=>{const end=+el.dataset.count,t0=performance.now(),d=1400;const s=t=>{const p=Math.min(1,(t-t0)/d);el.textContent=Math.round(end*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s)};requestAnimationFrame(s)});
+runCounts();
+// language toggle
+const btn=document.getElementById('lang');let lang=localStorage.getItem('jbcv_lang')||'de';
+function setLang(l){lang=l;localStorage.setItem('jbcv_lang',l);
+  document.documentElement.dataset.lang=l;
+  document.documentElement.lang=l;
+  btn.innerHTML=l==='de'?'<b>DE</b> / EN':'DE / <b>EN</b>';
+  document.getElementById('dl').href=l==='en'?'print.html?lang=en':'print.html';
+}
+btn.onclick=()=>setLang(lang==='de'?'en':'de');
+setLang(lang);
+// redaction reveal on hover
+document.querySelectorAll('.redb').forEach(el=>{el.addEventListener('mouseenter',()=>el.classList.add('reveal'));});
+</script>
+</body>
+</html>

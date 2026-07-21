@@ -1,542 +1,420 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#050507" />
-<title>[JB] Security · Penetration Testing · Web · AD · OT/ICS</title>
-<meta name="description" content="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-de="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." data-i18n-attr-en="Manual penetration testing for web applications, Active Directory, and OT/ICS. 20+ verified findings on HackerOne and Bugcrowd. Reports per OWASP, PTES, NIST SP 800-115, and MITRE ATT&CK." />
-<link rel="canonical" href="https://jb-security.de/" />
-<meta property="og:title" content="[JB] Security · Penetration Testing · Web · AD · OT/ICS" />
-<meta property="og:description" content="Manuelle Pentests für Web Applications, Active Directory und OT/ICS. 20+ verifizierte Findings über HackerOne und Bugcrowd. Reports nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://jb-security.de/" />
-<meta property="og:site_name" content="[JB] Security" />
-<meta property="og:locale" content="de_DE" />
-<meta property="og:image" content="https://jb-security.de/assets/og.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="[JB] Security · Penetration Testing" />
-<meta name="twitter:description" content="Manuelle Pentests für Web, Active Directory und OT/ICS — Reports nach OWASP, PTES, NIST und MITRE ATT&CK." />
-<meta name="twitter:image" content="https://jb-security.de/assets/og.png" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0a">
+<title>Josef Basner · Penetration Tester · Open to Work</title>
+<meta name="description" content="Penetration Tester &amp; Security Researcher. 20+ verifizierte Findings seit 2020, CompTIA Security+ zertifiziert. Offen für Junior-/Trainee-Rollen, remote EU-weit.">
+<link rel="canonical" href="https://jb-security.de/">
+<meta property="og:title" content="Josef Basner · Penetration Tester · Open to Work">
+<meta property="og:description" content="20+ verifizierte Findings seit 2020 · CompTIA Security+ zertifiziert · offen für Junior-/Trainee-Rollen, remote EU-weit.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jb-security.de/">
+<meta property="og:site_name" content="Josef Basner — [JB] Security">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://jb-security.de/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Josef Basner · Penetration Tester · Open to Work">
+<meta name="twitter:description" content="20+ verifizierte Findings seit 2020 · CompTIA Security+ zertifiziert · remote EU-weit.">
+<meta name="twitter:image" content="https://jb-security.de/assets/og.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "[JB] Security",
+  "@type": "Person",
+  "name": "Josef Roland Basner",
   "url": "https://jb-security.de/",
   "image": "https://jb-security.de/assets/og.png",
-  "description": "Manuelle Penetrationstests für Web Applications, Active Directory und OT/ICS nach OWASP, PTES, NIST SP 800-115 und MITRE ATT&CK.",
-  "founder": {
-    "@type": "Person",
-    "name": "Josef Roland Basner",
-    "jobTitle": "Penetration Tester",
-    "sameAs": ["https://github.com/JBMTP07", "https://jbmtp07.github.io/"]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Dr.-Külz-Straße 8a",
-    "postalCode": "17389",
-    "addressLocality": "Anklam",
-    "addressCountry": "DE"
-  },
+  "jobTitle": "Penetration Tester",
+  "description": "Penetration Tester und Security Researcher — 20+ verifizierte Findings seit 2020, CompTIA Security+ zertifiziert. Offen für Junior-/Trainee-Rollen, remote EU-weit.",
   "email": "josefbasner@proton.me",
-  "telephone": "+4915144957240",
-  "areaServed": ["DE", "AT", "CH"],
-  "knowsAbout": ["Penetration Testing", "Web Application Security", "Active Directory Security", "OT/ICS Security", "SCADA Security"]
+  "sameAs": ["https://github.com/JBMTP07", "https://www.linkedin.com/in/josef-basner-23a3173b2/"],
+  "knowsAbout": ["Penetration Testing", "Web Application Security", "Active Directory Security", "OT/ICS Security"]
 }
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050507'/%3E%3Cpath d='M11 9h3v10a4 4 0 01-8 0v-1h3v1a1 1 0 002 0V9zm12 0h-7v3h6v3h-6v3h7v3h-10V9h10z' fill='%2300ff9d'/%3E%3C/svg%3E" />
-<link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
-<link href="https://fonts.bunny.net/css?family=instrument-serif:400,400i|jetbrains-mono:400,500,700|space-grotesk:400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Cpath d='M11 9h3v10a4 4 0 01-8 0v-1h3v1a1 1 0 002 0V9zm12 0h-7v3h6v3h-6v3h7v3h-10V9h10z' fill='%23ff2323'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--panel:#121212;--panel2:#171717;--acc:#ff2323;--cyan:#39d0ff;--ink:#ededed;--dim:#8a8a8a;--mute:#5f5f5f;--line:rgba(237,237,237,.12);--line2:rgba(237,237,237,.2);--mono:"Space Mono",monospace;--body:"Archivo",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:var(--acc);color:#fff}
+.max{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* ambient */
+.scan{position:fixed;inset:0;z-index:60;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+.sweep{position:fixed;left:0;right:0;height:2px;background:var(--acc);opacity:.4;z-index:61;pointer-events:none;animation:sweepY 5s linear infinite}
+@keyframes sweepY{0%{top:-4px}100%{top:100%}}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:70;box-shadow:0 0 12px var(--acc)}
+
+/* marquee tape */
+.tape{background:var(--acc);color:#1a0000;font:700 12px var(--mono);letter-spacing:.16em;padding:9px 0;overflow:hidden;white-space:nowrap}
+.tape span{display:inline-block;animation:marq 22s linear infinite}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* nav */
+.bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 32px;background:rgba(10,10,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px;font:700 18px var(--mono);letter-spacing:.06em}
+.logo .mk{display:inline-flex;align-items:center;justify-content:center;width:38px;height:26px;background:var(--acc)}
+.logo .mk b{background:var(--bg);color:var(--ink);font:700 12px var(--mono);padding:2px 5px}
+.logo i{font-style:normal;color:var(--acc)}
+.cur{color:var(--acc);animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.navlinks{display:flex;gap:24px;font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.navlinks a{transition:.2s}
+.navlinks a:hover{color:var(--acc)}
+.tools{display:flex;align-items:center;gap:10px}
+.lang{font:700 12px var(--mono);letter-spacing:.1em;border:1px solid var(--line);background:transparent;color:var(--dim);padding:8px 12px;cursor:pointer;transition:.2s}
+.lang:hover{border-color:var(--acc);color:var(--ink)}
+.lang b{color:var(--acc)}
+@media(max-width:820px){.navlinks{display:none}}
+
+/* hero */
+.hero{padding:80px 0 0;border-bottom:1px solid var(--line)}
+.stamp{display:inline-flex;align-items:center;gap:9px;font:700 11px var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc);padding:7px 13px}
+.stamp .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 1.4s steps(2) infinite}
+h1{font-family:var(--mono);font-weight:700;font-size:clamp(38px,6.4vw,80px);line-height:1.02;letter-spacing:-.02em;margin:24px 0 22px;text-transform:uppercase}
+h1 .g{position:relative;display:inline-block;color:var(--acc)}
+h1 .g::before,h1 .g::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden;pointer-events:none}
+h1 .g::before{color:var(--acc);animation:g1 3.2s steps(1) infinite;clip-path:inset(8% 0 58% 0)}
+h1 .g::after{color:var(--cyan);animation:g2 3.2s steps(1) infinite;clip-path:inset(62% 0 6% 0)}
+@keyframes g1{0%,90%,100%{transform:none;opacity:0}92%{transform:translate(-4px,1px);opacity:1}95%{transform:translate(3px,-1px);opacity:1}98%{opacity:0}}
+@keyframes g2{0%,91%,100%{transform:none;opacity:0}93%{transform:translate(4px,-1px);opacity:1}96%{transform:translate(-3px,1px);opacity:1}99%{opacity:0}}
+.hero-sub{font:400 18px/1.7 var(--mono);color:var(--dim);max-width:62ch}
+.hero-sub b{color:var(--ink);font-weight:400}
+.hero-cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;padding-bottom:56px}
+.btn{font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:16px 30px;transition:.2s;display:inline-block;border:1px solid transparent}
+.btn-primary{background:var(--acc);color:#fff}
+.btn-primary:hover{box-shadow:0 0 24px rgba(255,35,35,.5);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--acc);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.stats>div{background:var(--bg);padding:26px 30px}
+.stats .n{font:700 36px var(--mono);color:var(--acc);line-height:1}
+.stats .l{font:400 11px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+
+/* sections */
+section{padding:90px 0;border-bottom:1px solid var(--line)}
+.alt{background:var(--panel2)}
+.sh{margin-bottom:48px;max-width:70ch}
+.kicker{font:700 12px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.sh h2{font-family:var(--mono);font-weight:700;font-size:clamp(26px,3.6vw,42px);letter-spacing:-.015em;margin:14px 0 16px;text-transform:none}
+.sh .lede{color:var(--dim);font-size:16px;line-height:1.7}
+.serif{font-style:italic}
+
+/* skill cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);padding:26px 26px 28px;transition:.2s;position:relative}
+.card:hover{border-color:rgba(255,35,35,.4);transform:translateY(-4px)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.card-num{font:700 13px var(--mono);color:var(--mute)}
+.card-tag{font:700 11px var(--mono);letter-spacing:.12em;color:var(--acc);border:1px solid rgba(255,35,35,.4);padding:4px 8px}
+.card-tag.warn{color:#ffb020;border-color:rgba(255,176,32,.4)}
+.card h3{font-size:19px;font-weight:700;margin-bottom:12px}
+.card p{color:var(--dim);font-size:14.5px;line-height:1.65;margin-bottom:18px}
+.card-list li{position:relative;padding:9px 0 9px 20px;border-top:1px solid var(--line);font:400 13px var(--mono);color:var(--dim)}
+.card-list li:first-child{border-top:0}
+.card-list li::before{content:"▸";position:absolute;left:0;color:var(--acc)}
+
+/* sample finding */
+.finding{position:relative;background:linear-gradient(180deg,rgba(255,35,35,.05),rgba(10,10,10,.9));border:1px solid rgba(255,35,35,.3)}
+.finding::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),#ffb020,var(--cyan))}
+.f-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.f-block{background:rgba(10,10,10,.85);padding:22px 26px}
+.f-block .lb{font:700 10px var(--mono);letter-spacing:.15em;color:var(--mute);display:block;margin-bottom:8px}
+.sev-pill{display:inline-block;font:700 12px var(--mono);letter-spacing:.08em;color:#fff;background:var(--acc);padding:4px 10px}
+.status-pill{display:inline-block;font:700 12px var(--mono);letter-spacing:.08em;color:var(--acc);border:1px solid var(--acc);padding:4px 10px}
+.cvss-score{font:700 30px var(--mono)}
+.f-title{padding:30px 26px 22px;font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.25}
+.f-title .sub{display:block;margin-top:8px;font:400 14px var(--mono);color:var(--dim)}
+.f-title .sub .a{color:var(--acc)}
+.f-chain{display:flex;gap:12px;padding:0 26px 26px;flex-wrap:wrap}
+.phase{flex:1;min-width:140px;padding:18px;background:rgba(0,0,0,.4);border:1px solid var(--line2);display:flex;flex-direction:column;gap:5px}
+.phase .n{font:400 11px var(--mono);color:var(--mute)}
+.phase .t{font:700 15px var(--mono)}
+.phase .d{font:400 11px var(--mono);color:var(--dim)}
+.phase.end .t{color:var(--acc)}
+.f-arrow{align-self:center;color:var(--acc);font-size:20px;font-family:var(--mono)}
+.f-foot{padding:22px 26px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;border-top:1px solid var(--line);background:rgba(0,0,0,.3)}
+.f-meta{display:flex;gap:28px;flex-wrap:wrap;font:400 12px var(--mono);color:var(--mute)}
+.f-meta strong{color:var(--ink);font-weight:500}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+.about-text p{color:var(--dim);font-size:15.5px;line-height:1.75;margin-bottom:16px}
+.about-stats{display:flex;gap:30px;margin-top:28px;padding-top:28px;border-top:1px solid var(--line);flex-wrap:wrap}
+.about-stats .n{font:700 26px var(--mono);color:var(--acc)}
+.about-stats .l{font:400 11px var(--mono);letter-spacing:.06em;color:var(--dim);margin-top:4px;max-width:16ch}
+.term{background:#070707;border:1px solid var(--line)}
+.term .tb{display:flex;align-items:center;gap:7px;padding:10px 13px;border-bottom:1px solid var(--line)}
+.term .tb i{width:10px;height:10px;border-radius:50%;background:#2a2a2a;font-style:normal}
+.term .tb i:first-child{background:var(--acc)}
+.term .tt{margin-left:auto;font:400 11px var(--mono);color:var(--mute)}
+.term .tbody{padding:20px 22px;font:400 13.5px/1.85 var(--mono);color:#d6d6d6}
+.term .p{color:var(--acc)}.term .o{color:var(--dim)}
+
+/* certs */
+.road{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.road li{position:relative;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--mute);padding:18px 20px 20px;transition:.2s}
+.road li:hover{border-color:rgba(255,35,35,.35)}
+.road li.done{border-left-color:var(--acc)}
+.road li.sched{border-left-color:var(--cyan)}
+.road .st{display:inline-block;font:700 10px var(--mono);letter-spacing:.16em;padding:4px 9px;margin-bottom:16px}
+.road li.done .st{color:var(--acc);border:1px solid rgba(255,35,35,.5)}
+.road li.sched .st{color:var(--cyan);border:1px solid rgba(57,208,255,.4)}
+.road li.plan .st{color:var(--mute);border:1px solid var(--line)}
+.road h4{font:700 16px var(--body);line-height:1.3}
+.road .code{font:400 12px var(--mono);color:var(--dim)}
+.road .date{font:400 12px var(--mono);color:var(--dim);margin-top:8px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+.contact-list{margin-top:28px;display:flex;flex-direction:column;gap:14px;font:400 14.5px var(--mono)}
+.contact-list li{display:flex;align-items:center;gap:14px}
+.contact-list .ic{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--line2);color:var(--acc);background:rgba(0,0,0,.4);font-weight:700;flex-shrink:0}
+.contact-list a:hover{color:var(--acc)}
+.contact-note{margin-top:24px;color:var(--dim);font-size:14px;line-height:1.7;max-width:48ch}
+.cta-card{padding:32px;background:linear-gradient(180deg,rgba(20,20,20,.8),rgba(10,10,10,.8));border:1px solid var(--line2)}
+.cta-card h3{font-size:22px;font-weight:700;margin:12px 0 14px}
+.cta-card p{color:var(--dim);font-size:14.5px;line-height:1.7;margin-bottom:24px}
+
+/* footer */
+footer{padding:40px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font:400 12px var(--mono);color:var(--mute)}
+.footer-brand{display:flex;align-items:center;gap:10px;color:var(--dim)}
+.footer-meta{display:flex;gap:10px;flex-wrap:wrap}
+.footer-meta a:hover{color:var(--acc)}
+
+[data-en]{display:none}
+html[data-lang="en"] [data-de]{display:none}
+html[data-lang="en"] [data-en]{display:revert}
+</style>
 </head>
 <body>
+<div class="scan"></div><div class="sweep"></div><div class="prog" id="prog"></div>
 
-<!-- Background canvas (3D network) -->
-<canvas id="bgfx" aria-hidden="true"></canvas>
-<div class="scanlines" aria-hidden="true"></div>
-<div class="grid-overlay" aria-hidden="true"></div>
-<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="tape"><span>&nbsp;OPEN TO WORK ⁄⁄ PENETRATION TESTER ⁄⁄ REMOTE EU ⁄⁄ 20+ VERIFIED FINDINGS ⁄⁄ SECURITY+ CERTIFIED ⁄⁄ OT/ICS BACKGROUND ⁄⁄ OPEN TO WORK ⁄⁄ PENETRATION TESTER ⁄⁄ REMOTE EU ⁄⁄ 20+ VERIFIED FINDINGS ⁄⁄ SECURITY+ CERTIFIED ⁄⁄ OT/ICS BACKGROUND ⁄⁄&nbsp;</span></div>
 
-<!-- Top nav -->
-<header class="nav">
-  <a href="#top" class="brand" aria-label="JB Security — Home">
-    <span class="brand-mark">JB</span>
-    <span class="brand-name">[JB] <em>Security</em></span>
-  </a>
-  <nav class="nav-links" id="mobileNav" aria-label="Hauptnavigation">
-    <a href="#services" data-i18n="nav.services">Leistungen</a>
-    <a href="#methodik" data-i18n="nav.methodik">Methodik</a>
-    <a href="#sample" data-i18n="nav.sample">Sample Report</a>
-    <a href="#process" data-i18n="nav.process">Prozess</a>
-    <a href="#contact" data-i18n="nav.contact">Kontakt</a>
+<header class="bar">
+  <a class="logo" href="#top"><span class="mk"><b>JB</b></span>JB<i>//</i>SEC<span class="cur">_</span></a>
+  <nav class="navlinks">
+    <a href="#about">./about</a>
+    <a href="#skills">./skills</a>
+    <a href="#proof">./proof</a>
+    <a href="#contact">./contact</a>
   </nav>
-  <div class="nav-right">
-    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
-      <span data-lang="de" class="active">DE</span>
-      <span class="lang-sep">/</span>
-      <span data-lang="en">EN</span>
-    </button>
-    <button class="burger" id="navBurger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="tools">
+    <button class="lang" id="lang"><b>DE</b> / EN</button>
   </div>
 </header>
 
 <main id="top">
-
-<!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-meta-row">
-      <div class="hero-meta">
-        <span class="dot pulse"></span>
-        <span data-i18n="hero.status">Verfügbar ab Juli 2026 · Q3-Slots offen</span>
-      </div>
-      <div class="hero-meta cert">
-        <span class="cert-mark" aria-hidden="true">✓</span>
-        <span data-i18n="hero.cert">CompTIA Security+ (SY0-701) · zertifiziert 05/2026</span>
-      </div>
-    </div>
-    <h1 class="hero-title">
-      <span class="line" data-glitch data-i18n="hero.title1">Offensive Security.</span>
-      <span class="line accent" data-glitch data-i18n="hero.title2">Ich finde, was Scanner übersehen.</span>
+  <div class="max">
+    <span class="stamp"><span class="dot"></span><span data-de>Open to Work · Junior / Trainee · Remote EU</span><span data-en>Open to Work · Junior / Trainee · Remote EU</span></span>
+    <h1>
+      <span data-de>OFFENSIVE SECURITY.</span><span data-en>OFFENSIVE SECURITY.</span><br>
+      <span data-de><span class="g" data-t="ICH FINDE, WAS SCANNER ÜBERSEHEN.">ICH FINDE, WAS SCANNER ÜBERSEHEN.</span></span><span data-en><span class="g" data-t="I FIND WHAT SCANNERS MISS.">I FIND WHAT SCANNERS MISS.</span></span>
     </h1>
-    <p class="hero-sub" data-i18n="hero.sub">
-      20+ verifizierte Findings über HackerOne &amp; Bugcrowd &middot; Bug Bounty seit 2020.
-      Manuelle Pentests für Web, Active Directory und OT/ICS &mdash; mit Reports,
-      die der Vorstand versteht und das Engineering umsetzen kann.
+    <p class="hero-sub">
+      <span data-de>20+ verifizierte Findings über HackerOne &amp; Bugcrowd &middot; Bug Bounty seit 2020. Manuelle Pentests für Web, Active Directory und OT/ICS. <b>CompTIA Security+ zertifiziert</b> &mdash; ich suche jetzt eine Rolle als Penetration Tester, Junior/Trainee, remote EU-weit.</span>
+      <span data-en>20+ verified findings on HackerOne &amp; Bugcrowd &middot; bug bounty since 2020. Manual pentests for web, Active Directory and OT/ICS. <b>CompTIA Security+ certified</b> &mdash; now looking for a role as a penetration tester, junior/trainee, remote across the EU.</span>
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#contact" data-i18n="hero.cta1">Pentest anfragen</a>
-      <a class="btn btn-ghost" href="#sample" data-i18n="hero.cta2">Sample-Report ansehen</a>
-    </div>
-
-    <div class="hero-marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span>OWASP WSTG v4.2</span><span>·</span>
-        <span>PTES</span><span>·</span>
-        <span>NIST SP 800-115</span><span>·</span>
-        <span>MITRE ATT&amp;CK</span><span>·</span>
-        <span>OSSTMM</span><span>·</span>
-        <span>CVSS v3.1 + v4.0</span><span>·</span>
-        <span>CWE</span><span>·</span>
-        <span>IEC 62443</span><span>·</span>
-        <span>OWASP WSTG v4.2</span><span>·</span>
-        <span>PTES</span><span>·</span>
-        <span>NIST SP 800-115</span><span>·</span>
-        <span>MITRE ATT&amp;CK</span><span>·</span>
-        <span>OSSTMM</span><span>·</span>
-        <span>CVSS v3.1 + v4.0</span><span>·</span>
-        <span>CWE</span><span>·</span>
-        <span>IEC 62443</span><span>·</span>
-      </div>
+      <a class="btn btn-primary" href="cv/"><span data-de>Lebenslauf ansehen</span><span data-en>View CV</span></a>
+      <a class="btn btn-ghost" href="assets/sample-finding.pdf" target="_blank" rel="noopener">cat sample_finding.pdf</a>
     </div>
   </div>
-
-  <div class="hero-corner top-left" aria-hidden="true"></div>
-  <div class="hero-corner top-right" aria-hidden="true"></div>
-  <div class="hero-corner bot-left" aria-hidden="true"></div>
-  <div class="hero-corner bot-right" aria-hidden="true"></div>
-</section>
-
-<!-- ============ SERVICES ============ -->
-<section class="section" id="services">
-  <div class="section-head">
-    <span class="kicker" data-i18n="services.kicker">// LEISTUNGEN</span>
-    <h2 data-i18n="services.title">Was [JB] Security macht.</h2>
-    <p class="lede" data-i18n="services.lede">
-      Drei Kernbereiche &mdash; manuell, methodisch, mit reproduzierbaren Befunden.
-      Kein Vulnerability-Scan im Hochglanz-PDF.
-    </p>
-  </div>
-
-  <div class="cards tilt-grid">
-    <article class="card" data-tilt>
-      <div class="card-head">
-        <span class="card-num">01</span>
-        <span class="card-tag" data-i18n="services.s1.tag">WEB</span>
-      </div>
-      <h3 data-i18n="services.s1.title">Web Application Pentest</h3>
-      <p data-i18n="services.s1.body">
-        Manuelle Tiefenprüfung gegen OWASP Top 10 und WSTG v4.2.
-        Auth-Logik, Business-Logic-Flaws, SSRF, IDOR, Injection-Chains &mdash;
-        nicht das, was der Scanner schon kennt.
-      </p>
-      <ul class="card-list">
-        <li data-i18n="services.s1.l1">Black-, Grey- und White-Box</li>
-        <li data-i18n="services.s1.l2">API-Tests (REST, GraphQL)</li>
-        <li data-i18n="services.s1.l3">Chained Exploits &amp; Proof-of-Concept</li>
-      </ul>
-    </article>
-
-    <article class="card" data-tilt>
-      <div class="card-head">
-        <span class="card-num">02</span>
-        <span class="card-tag" data-i18n="services.s2.tag">NETWORK</span>
-      </div>
-      <h3 data-i18n="services.s2.title">Netzwerk &amp; Active Directory</h3>
-      <p data-i18n="services.s2.body">
-        Externe und interne Netzwerk-Pentests inkl. AD-Angriffspfade.
-        Kerberoasting, ACL-Missbrauch, Lateral Movement &mdash;
-        bis zur Domain Dominance, dokumentiert nach MITRE ATT&amp;CK.
-      </p>
-      <ul class="card-list">
-        <li data-i18n="services.s2.l1">External / Internal / Assumed Breach</li>
-        <li data-i18n="services.s2.l2">AD-Härtung &amp; Tier-Modell-Audit</li>
-        <li data-i18n="services.s2.l3">Phishing-Simulationen (auf Wunsch)</li>
-      </ul>
-    </article>
-
-    <article class="card" data-tilt>
-      <div class="card-head">
-        <span class="card-num">03</span>
-        <span class="card-tag" data-i18n="services.s3.tag">OT / ICS</span>
-      </div>
-      <h3 data-i18n="services.s3.title">OT / ICS &amp; SCADA Security</h3>
-      <p data-i18n="services.s3.body">
-        Sicherheit für industrielle Steuerungssysteme &mdash; Modbus, OPC UA, S7,
-        Profinet. Purdue-Modell-Konformität, Segmentierungs-Audits und
-        nicht-invasive Tests an Live-Anlagen.
-      </p>
-      <ul class="card-list">
-        <li data-i18n="services.s3.l1">IEC 62443 / NIST SP 800-82 Alignment</li>
-        <li data-i18n="services.s3.l2">Passive Netzwerk-Analyse &amp; Asset Discovery</li>
-        <li data-i18n="services.s3.l3">Risiko-Bewertung vor Maintenance-Windows</li>
-      </ul>
-      <div class="card-corner"></div>
-    </article>
+  <div class="stats">
+    <div><div class="n">20+</div><div class="l"><span data-de>Verifizierte Findings</span><span data-en>Verified findings</span></div></div>
+    <div><div class="n">9.9</div><div class="l"><span data-de>Höchster CVSS Score</span><span data-en>Highest CVSS score</span></div></div>
+    <div><div class="n">Sec+</div><div class="l">CompTIA · SY0-701</div></div>
+    <div><div class="n">5+</div><div class="l"><span data-de>Jahre offensive Praxis</span><span data-en>Years offensive practice</span></div></div>
   </div>
 </section>
 
-<!-- ============ METHODIK ============ -->
-<section class="section section-alt" id="methodik">
-  <div class="section-head">
-    <span class="kicker" data-i18n="methodik.kicker">// METHODIK</span>
-    <h2 data-i18n="methodik.title">Anerkannte Standards. Keine Black Box.</h2>
-    <p class="lede" data-i18n="methodik.lede">
-      Jeder Pentest ist nachvollziehbar dokumentiert &mdash; gleiche Methodik, gleiche
-      Reproduzierbarkeit, gleiche Berichtsstruktur. Vom ersten Recon bis zum Retest.
-    </p>
-  </div>
-
-  <div class="methodik-grid">
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">01</span>
-      <h4 data-i18n="methodik.m1.title">OWASP</h4>
-      <p data-i18n="methodik.m1.body">Top 10 (2021), ASVS, WSTG v4.2 &mdash; Tests sind 1:1 referenzierbar.</p>
+<section id="skills">
+  <div class="max">
+    <div class="sh">
+      <span class="kicker">// <span data-de>SKILLS</span><span data-en>SKILLS</span></span>
+      <h2><span data-de>Was ich kann.</span><span data-en>What I can do.</span></h2>
+      <p class="lede"><span data-de>Drei Kernbereiche &mdash; manuell, methodisch, mit reproduzierbaren Befunden. Kein Vulnerability-Scan im Hochglanz-PDF.</span><span data-en>Three core areas &mdash; manual, methodical, reproducible findings. Not a glossy vulnerability-scan PDF.</span></p>
     </div>
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">02</span>
-      <h4 data-i18n="methodik.m2.title">PTES</h4>
-      <p data-i18n="methodik.m2.body">Sieben Phasen vom Pre-Engagement bis zum Reporting &mdash; nichts wird ausgelassen.</p>
-    </div>
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">03</span>
-      <h4 data-i18n="methodik.m3.title">NIST SP 800-115</h4>
-      <p data-i18n="methodik.m3.body">Technical Guide to Information Security Testing &mdash; Audit-fest.</p>
-    </div>
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">04</span>
-      <h4 data-i18n="methodik.m4.title">MITRE ATT&amp;CK</h4>
-      <p data-i18n="methodik.m4.body">Jeder Befund wird auf TTPs gemappt &mdash; Detection-Teams können direkt Signaturen bauen.</p>
-    </div>
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">05</span>
-      <h4 data-i18n="methodik.m5.title">CVSS v3.1 + v4.0</h4>
-      <p data-i18n="methodik.m5.body">Parallele Scores &mdash; kompatibel mit PCI DSS 4.0.1 und gängigen GRC-Tools.</p>
-    </div>
-    <div class="m-card" data-tilt>
-      <div class="m-card-stripe"></div>
-      <span class="m-card-num">06</span>
-      <h4 data-i18n="methodik.m6.title">OSSTMM</h4>
-      <p data-i18n="methodik.m6.body">Open Source Security Testing Methodology &mdash; für ganzheitliche Audits.</p>
+    <div class="cards">
+      <article class="card">
+        <div class="card-head"><span class="card-num">01</span><span class="card-tag">WEB</span></div>
+        <h3><span data-de>Web Application Pentest</span><span data-en>Web Application Pentest</span></h3>
+        <p><span data-de>Manuelle Tiefenprüfung gegen OWASP Top 10 und WSTG v4.2. Auth-Logik, Business-Logic-Flaws, SSRF, IDOR, Injection-Chains &mdash; nicht das, was der Scanner schon kennt.</span><span data-en>Manual deep testing against OWASP Top 10 and WSTG v4.2. Auth logic, business-logic flaws, SSRF, IDOR, injection chains &mdash; not what the scanner already knows.</span></p>
+        <ul class="card-list">
+          <li><span data-de>Black-, Grey- und White-Box</span><span data-en>Black / grey / white box</span></li>
+          <li><span data-de>API-Tests (REST, GraphQL)</span><span data-en>API tests (REST, GraphQL)</span></li>
+          <li><span data-de>Chained Exploits &amp; Proof-of-Concept</span><span data-en>Chained exploits &amp; proof-of-concept</span></li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="card-head"><span class="card-num">02</span><span class="card-tag">NETWORK</span></div>
+        <h3><span data-de>Netzwerk &amp; Active Directory</span><span data-en>Network &amp; Active Directory</span></h3>
+        <p><span data-de>Externe und interne Netzwerk-Pentests inkl. AD-Angriffspfade. Kerberoasting, ACL-Missbrauch, Lateral Movement &mdash; bis zur Domain Dominance, dokumentiert nach MITRE ATT&amp;CK.</span><span data-en>External and internal network pentests incl. AD attack paths. Kerberoasting, ACL abuse, lateral movement &mdash; to domain dominance, documented per MITRE ATT&amp;CK.</span></p>
+        <ul class="card-list">
+          <li><span data-de>External / Internal / Assumed Breach</span><span data-en>External / Internal / Assumed Breach</span></li>
+          <li><span data-de>AD-Härtung &amp; Tier-Modell-Audit</span><span data-en>AD hardening &amp; tier-model audit</span></li>
+          <li><span data-de>Phishing-Simulationen</span><span data-en>Phishing simulations</span></li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="card-head"><span class="card-num">03</span><span class="card-tag warn">OT / ICS</span></div>
+        <h3><span data-de>OT / ICS &amp; SCADA Security</span><span data-en>OT / ICS &amp; SCADA Security</span></h3>
+        <p><span data-de>Sicherheit für industrielle Steuerungssysteme &mdash; Modbus, OPC UA, S7, Profinet. Purdue-Konformität, Segmentierungs-Audits, nicht-invasive Tests. Aus eigener Mechatroniker-Ausbildung.</span><span data-en>Security for industrial control systems &mdash; Modbus, OPC UA, S7, Profinet. Purdue conformance, segmentation audits, non-invasive testing. Grounded in my own mechatronics background.</span></p>
+        <ul class="card-list">
+          <li>IEC 62443 / NIST SP 800-82</li>
+          <li><span data-de>Passive Netzwerk-Analyse &amp; Asset Discovery</span><span data-en>Passive network analysis &amp; asset discovery</span></li>
+          <li><span data-de>Risiko-Bewertung vor Maintenance-Windows</span><span data-en>Risk rating before maintenance windows</span></li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ============ SAMPLE FINDING ============ -->
-<section class="section" id="sample">
-  <div class="section-head">
-    <span class="kicker" data-i18n="sample.kicker">// ARBEITSPROBE</span>
-    <h2 data-i18n="sample.title">So sieht ein Report aus.</h2>
-    <p class="lede" data-i18n="sample.lede">
-      Anonymisierter Auszug aus einem realen Bug-Bounty-Report
-      (HackerOne, disclosed &amp; patched). Kein Hochglanz-Marketing-PDF.
-    </p>
-  </div>
-
-  <div class="finding-card">
-    <div class="finding-header">
-      <div class="severity-block">
-        <span class="severity-label" data-i18n="sample.sev">SEVERITY</span>
-        <span class="severity-pill">CRITICAL</span>
-      </div>
-      <div class="cvss-block">
-        <span class="cvss-label">CVSS v3.1</span>
-        <span class="cvss-score">9.9</span>
-      </div>
-      <div class="cvss-block">
-        <span class="cvss-label">CVSS v4.0</span>
-        <span class="cvss-score">9.3</span>
-      </div>
-      <div class="status-block">
-        <span class="status-label" data-i18n="sample.status">STATUS</span>
-        <span class="status-pill">PATCHED</span>
-      </div>
+<section id="proof" class="alt">
+  <div class="max">
+    <div class="sh">
+      <span class="kicker">// <span data-de>ARBEITSPROBE</span><span data-en>WORK SAMPLE</span></span>
+      <h2><span data-de>So sieht ein Report aus.</span><span data-en>This is what a report looks like.</span></h2>
+      <p class="lede"><span data-de>Anonymisierter Auszug aus einem realen Bug-Bounty-Report (HackerOne, disclosed &amp; patched). Kein Hochglanz-Marketing-PDF.</span><span data-en>Anonymized excerpt from a real bug-bounty report (HackerOne, disclosed &amp; patched). Not a glossy marketing PDF.</span></p>
     </div>
-
-    <h3 class="finding-title">
-      <span data-i18n="sample.h1">Chained Exploit Chain</span>
-      <span class="finding-sub">SQLi <span class="arrow">→</span> Stored XSS <span class="arrow">→</span> SSTI <span class="arrow">→</span> RCE</span>
-    </h3>
-
-    <div class="finding-chain">
-      <div class="phase">
-        <span class="phase-num">01</span>
-        <span class="phase-title">SQL Injection</span>
-        <span class="phase-desc" data-i18n="sample.p1">Public form · unauth</span>
+    <div class="finding">
+      <div class="f-grid">
+        <div class="f-block"><span class="lb"><span data-de>SEVERITY</span><span data-en>SEVERITY</span></span><span class="sev-pill">CRITICAL</span></div>
+        <div class="f-block"><span class="lb">CVSS v3.1</span><span class="cvss-score">9.9</span></div>
+        <div class="f-block"><span class="lb">CVSS v4.0</span><span class="cvss-score">9.3</span></div>
+        <div class="f-block"><span class="lb"><span data-de>STATUS</span><span data-en>STATUS</span></span><span class="status-pill">PATCHED</span></div>
       </div>
-      <div class="phase-arrow">→</div>
-      <div class="phase">
-        <span class="phase-num">02</span>
-        <span class="phase-title">Stored XSS</span>
-        <span class="phase-desc" data-i18n="sample.p2">Admin dashboard · session hijack</span>
+      <h3 class="f-title">Chained Exploit Chain
+        <span class="sub">SQLi <span class="a">→</span> Stored XSS <span class="a">→</span> SSTI <span class="a">→</span> RCE</span>
+      </h3>
+      <div class="f-chain">
+        <div class="phase"><span class="n">01</span><span class="t">SQL Injection</span><span class="d"><span data-de>Public form · unauth</span><span data-en>Public form · unauth</span></span></div>
+        <div class="f-arrow">→</div>
+        <div class="phase"><span class="n">02</span><span class="t">Stored XSS</span><span class="d"><span data-de>Admin dashboard · session hijack</span><span data-en>Admin dashboard · session hijack</span></span></div>
+        <div class="f-arrow">→</div>
+        <div class="phase"><span class="n">03</span><span class="t">SSTI → RCE</span><span class="d"><span data-de>Report generator · Jinja2 escape</span><span data-en>Report generator · Jinja2 escape</span></span></div>
+        <div class="f-arrow">→</div>
+        <div class="phase end"><span class="n">04</span><span class="t">Root Shell</span><span class="d">uid=0(root) · &lt;60s end-to-end</span></div>
       </div>
-      <div class="phase-arrow">→</div>
-      <div class="phase">
-        <span class="phase-num">03</span>
-        <span class="phase-title">SSTI → RCE</span>
-        <span class="phase-desc" data-i18n="sample.p3">Report generator · Jinja2 escape</span>
+      <div class="f-foot">
+        <div class="f-meta">
+          <div><span data-de>Report-ID</span><span data-en>Report ID</span> · <strong>JBSEC-2026-001</strong></div>
+          <div>CWE · <strong>89 · 79 · 1336 · 94</strong></div>
+          <div>MITRE ATT&amp;CK · <strong>T1190 · T1059</strong></div>
+        </div>
+        <a class="btn btn-primary" href="assets/sample-finding.pdf" target="_blank" rel="noopener"><span data-de>Vollständigen Report öffnen (PDF)</span><span data-en>Open full report (PDF)</span></a>
       </div>
-      <div class="phase-arrow">→</div>
-      <div class="phase phase-end">
-        <span class="phase-num">04</span>
-        <span class="phase-title">Root Shell</span>
-        <span class="phase-desc" data-i18n="sample.p4">uid=0(root) · &lt;60s end-to-end</span>
-      </div>
-    </div>
-
-    <div class="finding-foot">
-      <div class="finding-meta">
-        <div><span data-i18n="sample.meta.id">Report-ID</span> · <strong>JBSEC-2026-001</strong></div>
-        <div><span data-i18n="sample.meta.cwe">CWE</span> · <strong>89 · 79 · 1336 · 94</strong></div>
-        <div><span data-i18n="sample.meta.attack">MITRE ATT&amp;CK</span> · <strong>T1190 · T1059</strong></div>
-      </div>
-      <a class="btn btn-primary" href="assets/sample-finding.pdf" target="_blank" rel="noopener" data-i18n="sample.cta">
-        Vollständigen Report öffnen (PDF)
-      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ PROZESS ============ -->
-<section class="section section-alt" id="process">
-  <div class="section-head">
-    <span class="kicker" data-i18n="process.kicker">// PROZESS</span>
-    <h2 data-i18n="process.title">Vom Erstgespräch zum <i class="serif">Retest</i>.</h2>
-    <p class="lede" data-i18n="process.lede">
-      Sauber definierter Ablauf, vertraglich geregelt &mdash; mit NDA, AVV, TOM
-      und Authorization Letter. Auf Wunsch komplette Vertragsunterlagen vorab.
-    </p>
-  </div>
-
-  <ol class="process-steps">
-    <li>
-      <span class="step-num">01</span>
-      <h4 data-i18n="process.s1.title">Erstgespräch &amp; Scoping</h4>
-      <p data-i18n="process.s1.body">Kostenfrei. Wir klären Scope, Test-Modus, Timing und Rules of Engagement.</p>
-    </li>
-    <li>
-      <span class="step-num">02</span>
-      <h4 data-i18n="process.s2.title">Vertragspaket</h4>
-      <p data-i18n="process.s2.body">Pentest-Dienstleistungsvertrag mit SoW, NDA, AVV (Art. 28 DSGVO), TOM und Authorization Letter.</p>
-    </li>
-    <li>
-      <span class="step-num">03</span>
-      <h4 data-i18n="process.s3.title">Testdurchführung</h4>
-      <p data-i18n="process.s3.body">Werktägliche Status-Updates, sofortige Eskalation bei Critical Findings (CVSS &ge; 9.0).</p>
-    </li>
-    <li>
-      <span class="step-num">04</span>
-      <h4 data-i18n="process.s4.title">Report &amp; Debriefing</h4>
-      <p data-i18n="process.s4.body">Verschlüsselte Übergabe via PGP/S-MIME. Bis zu 2h Workshop kostenfrei inklusive.</p>
-    </li>
-    <li>
-      <span class="step-num">05</span>
-      <h4 data-i18n="process.s5.title">Retest</h4>
-      <p data-i18n="process.s5.body">Verifikation behobener Schwachstellen &mdash; empfohlen 6 bis 8 Wochen nach Berichtsabgabe.</p>
-    </li>
-  </ol>
-</section>
-
-<!-- ============ ÜBER ============ -->
-<section class="section" id="about">
-  <div class="about-grid">
+<section id="about">
+  <div class="max about-grid">
     <div class="about-text">
-      <span class="kicker" data-i18n="about.kicker">// ÜBER</span>
-      <h2 data-i18n="about.title">Josef <i class="serif">Roland</i> Basner</h2>
-      <p data-i18n="about.p1">
-        Penetration Tester und Security Researcher mit Schwerpunkt auf
-        Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als
-        Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv &mdash; 20+ verifizierte
-        Findings in privaten / invite-only Programmen, Schwerpunkt
-        Business-Logic-Flaws und Exploit-Chains.
-      </p>
-      <p data-i18n="about.p2">
-        Hintergrund aus dem industriellen Umfeld &mdash; ich verstehe, dass eine
-        SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.
-      </p>
+      <span class="kicker">// <span data-de>ÜBER</span><span data-en>ABOUT</span></span>
+      <h2 style="font-family:var(--mono);font-weight:700;font-size:clamp(26px,3.6vw,42px);letter-spacing:-.015em;margin:14px 0 20px">Josef <i class="serif">Roland</i> Basner</h2>
+      <p><span data-de>Penetration Tester und Security Researcher mit Schwerpunkt Web-Application-Security, Active Directory und OT/ICS. Seit 2020 als Bug-Bounty-Hunter auf HackerOne und Bugcrowd aktiv &mdash; 20+ verifizierte Findings in privaten / invite-only Programmen, Schwerpunkt Business-Logic-Flaws und Exploit-Chains.</span><span data-en>Penetration tester and security researcher focused on web-application security, Active Directory and OT/ICS. Active since 2020 as a bug-bounty hunter on HackerOne and Bugcrowd &mdash; 20+ verified findings in private / invite-only programs, focused on business-logic flaws and exploit chains.</span></p>
+      <p><span data-de>Hintergrund aus dem industriellen Umfeld als ausgebildeter Mechatroniker (Siemens S7, SCADA) &mdash; ich verstehe, dass eine SPS-Steuerung nicht für "schnell mal Patch einspielen" gebaut wurde.</span><span data-en>Background from the industrial world as a trained mechatronics engineer (Siemens S7, SCADA) &mdash; I understand that a PLC wasn't built for "just push a quick patch."</span></p>
       <div class="about-stats">
-        <div>
-          <strong data-count="2000000" data-suffix="&nbsp;€">0&nbsp;€</strong>
-          <span data-i18n="about.stat1">IT-Berufshaftpflicht inkl. Hacker-Klausel</span>
-        </div>
-        <div>
-          <strong data-count="20" data-suffix="+">0+</strong>
-          <span data-i18n="about.stat2">Verifizierte Findings auf H1 &amp; Bugcrowd</span>
-        </div>
-        <div>
-          <strong>Sec+</strong>
-          <span data-i18n="about.stat3">CompTIA Security+ (SY0-701) · 05/2026</span>
-        </div>
+        <div><div class="n">Sec+</div><div class="l">CompTIA Security+ · SY0-701 · 05/2026</div></div>
+        <div><div class="n">20+</div><div class="l"><span data-de>Findings auf H1 &amp; Bugcrowd</span><span data-en>Findings on H1 &amp; Bugcrowd</span></div></div>
+        <div><div class="n">OT/ICS</div><div class="l">Siemens S7 · SCADA</div></div>
       </div>
     </div>
-    <div class="about-card">
-      <div class="terminal">
-        <div class="term-bar">
-          <span class="term-dot r"></span>
-          <span class="term-dot y"></span>
-          <span class="term-dot g"></span>
-          <span class="term-title">whoami.sh</span>
-        </div>
-        <div class="term-body">
-          <p><span class="prompt">jb@security</span><span class="path">~</span>$ whoami</p>
-          <p class="out">josef_basner</p>
-          <p><span class="prompt">jb@security</span><span class="path">~</span>$ id</p>
-          <p class="out">uid=1337(pentester) groups=ot_ics,web_app,network,bugbounty</p>
-          <p><span class="prompt">jb@security</span><span class="path">~</span>$ cat /etc/standards</p>
-          <p class="out">OWASP · PTES · NIST SP 800-115 · MITRE ATT&amp;CK · IEC 62443</p>
-          <p><span class="prompt">jb@security</span><span class="path">~</span>$ <span class="cursor">_</span></p>
-        </div>
+    <div class="term">
+      <div class="tb"><i></i><i></i><i></i><span class="tt">whoami.sh</span></div>
+      <div class="tbody">
+        <p><span class="p">jb@security</span>:~$ whoami</p>
+        <p class="o">josef_basner</p>
+        <p><span class="p">jb@security</span>:~$ id</p>
+        <p class="o">uid=1337(pentester) groups=ot_ics,web_app,network,bugbounty</p>
+        <p><span class="p">jb@security</span>:~$ cat /etc/standards</p>
+        <p class="o">OWASP · PTES · NIST SP 800-115 · MITRE ATT&amp;CK · IEC 62443</p>
+        <p><span class="p">jb@security</span>:~$ <span class="cur">_</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ KONTAKT ============ -->
-<section class="section section-alt" id="contact">
-  <div class="contact-grid">
-    <div class="contact-left">
-      <span class="kicker" data-i18n="contact.kicker">// KONTAKT</span>
-      <h2 data-i18n="contact.title">Engagement anfragen.</h2>
-      <p class="lede" data-i18n="contact.lede">
-        Beschreib kurz, was du testen lassen willst. Antwort innerhalb von 48&nbsp;Stunden
-        &mdash; bei akuten Vorfällen schneller.
-      </p>
-
-      <ul class="contact-details">
-        <li>
-          <span class="ico" aria-hidden="true">@</span>
-          <a href="mailto:josefbasner@proton.me">josefbasner@proton.me</a>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true">☎</span>
-          <a href="tel:+4915144957240">+49 151 4495 7240</a>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true">◇</span>
-          <a href="https://github.com/JBMTP07" target="_blank" rel="noopener">github.com/JBMTP07</a>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true">▣</span>
-          <span data-i18n="contact.loc">Dr.-Külz-Straße 8a · 17389 Anklam · DE</span>
-        </li>
-      </ul>
-
-      <p class="contact-note" data-i18n="contact.note">
-        Für sensible Anfragen: PGP-Schlüssel auf Anfrage. Akuter Vorfall?
-        Direkt anrufen.
-      </p>
+<section class="alt">
+  <div class="max">
+    <div class="sh">
+      <span class="kicker">// <span data-de>ZERTIFIZIERUNGSPFAD</span><span data-en>CERTIFICATION PATH</span></span>
+      <h2><span data-de>Vom Security+ zum OSCP.</span><span data-en>From Security+ to OSCP.</span></h2>
     </div>
+    <ol class="road">
+      <li class="done"><span class="st"><span data-de>BESTANDEN</span><span data-en>PASSED</span></span><h4>CompTIA Security+ <span class="code">SY0-701</span></h4><div class="date">05/2026</div></li>
+      <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>CompTIA PenTest+</h4><div class="date">2026</div></li>
+      <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>EC-Council CEH <span class="code">v13</span></h4><div class="date">2026</div></li>
+      <li class="sched"><span class="st"><span data-de>IN PRÜFUNG</span><span data-en>IN PROGRESS</span></span><h4>CompTIA Network+ / Linux+</h4><div class="date">2026</div></li>
+      <li class="plan"><span class="st"><span data-de>GEPLANT</span><span data-en>PLANNED</span></span><h4>OffSec OSCP</h4><div class="date">Q4 2026</div></li>
+    </ol>
+  </div>
+</section>
 
-    <aside class="contact-card" aria-label="E-Mail-Anfrage">
-      <div class="contact-card-head">
-        <span class="contact-card-tag" data-i18n="mail.tag">// DIREKTE ANFRAGE PER E-MAIL</span>
-        <h3 data-i18n="mail.title">Wähle deinen Anfrage-Typ.</h3>
-        <p data-i18n="mail.body">
-          Ein Klick &mdash; dein Mail-Client öffnet sich mit passendem Betreff und einer
-          Vorlage, die ich für die Auftragsklärung brauche. Keine Drittanbieter,
-          kein Tracking, kein Cookie-Banner.
-        </p>
-      </div>
-
-      <div class="mail-options">
-        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20Web%20Application&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20einen%20Web%20Application%20Pentest%20anfragen.%0A%0AUnternehmen%3A%20%0AAnsprechpartner%3A%20%0A%0AScope%20(Ziel-URL%2Fs%2C%20Anzahl%20Endpunkte)%3A%20%0ATest-Modus%20(Black%20%2F%20Grey%20%2F%20White-Box)%3A%20%0AGew%C3%BCnschter%20Zeitraum%3A%20%0ABesondere%20Anforderungen%20(NDA%20vorab%2C%20Test-Account%2C%20Whitelisting)%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
-          <span class="mail-option-tag">WEB</span>
-          <span class="mail-option-title" data-i18n="mail.o1">Web Application Pentest</span>
-          <span class="mail-option-arrow">→</span>
-        </a>
-        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20Netzwerk%20%2F%20Active%20Directory&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20einen%20Netzwerk-%20%2F%20AD-Pentest%20anfragen.%0A%0AUnternehmen%3A%20%0AAnsprechpartner%3A%20%0A%0AScope%20(externe%20%2F%20interne%20IP-Ranges%2C%20Anzahl%20Hosts)%3A%20%0AAD-Domain%20%2F%20Forest%3A%20%0ATest-Modus%20(External%20%2F%20Internal%20%2F%20Assumed%20Breach)%3A%20%0AGew%C3%BCnschter%20Zeitraum%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
-          <span class="mail-option-tag">NETWORK</span>
-          <span class="mail-option-title" data-i18n="mail.o2">Netzwerk- / AD-Pentest</span>
-          <span class="mail-option-arrow">→</span>
-        </a>
-        <a class="mail-option highlight" href="mailto:josefbasner@proton.me?subject=Pentest-Anfrage%20%C2%B7%20OT%20%2F%20ICS%20Security%20Assessment&amp;body=Hallo%20Josef%2C%0A%0Aich%20m%C3%B6chte%20ein%20OT%20%2F%20ICS%20Security%20Assessment%20anfragen.%0A%0AUnternehmen%2FStandort%3A%20%0AAnsprechpartner%20(Engineering%20%2B%20IT)%3A%20%0A%0AAnlagen-Typ%20(SCADA%20%2F%20DCS%20%2F%20PLC%20%2F%20mixed)%3A%20%0AHersteller%20%2F%20Protokolle%20(z.B.%20Siemens%20S7%2C%20Modbus%2C%20OPC%20UA)%3A%20%0APurdue-Level%20im%20Scope%3A%20%0AInvasiv%20oder%20nur%20passiv%3F%3A%20%0AMaintenance-Window%20%2F%20Zeitfenster%3A%20%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
-          <span class="mail-option-tag warn">OT / ICS</span>
-          <span class="mail-option-title" data-i18n="mail.o3">OT / ICS Security Assessment</span>
-          <span class="mail-option-arrow">→</span>
-        </a>
-        <a class="mail-option" href="mailto:josefbasner@proton.me?subject=Beratungsanfrage%20%C2%B7%20%5BJB%5D%20Security&amp;body=Hallo%20Josef%2C%0A%0Aich%20habe%20eine%20Anfrage%20zu%3A%0A%0A%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
-          <span class="mail-option-tag">SONSTIGES</span>
-          <span class="mail-option-title" data-i18n="mail.o4">Beratung / Sonstiges</span>
-          <span class="mail-option-arrow">→</span>
-        </a>
-      </div>
-
-      <div class="mail-foot">
-        <p data-i18n="mail.foot">
-          Mail-Client nicht eingerichtet? Schreib direkt an
-          <a href="mailto:josefbasner@proton.me"><strong>josefbasner@proton.me</strong></a>.
-        </p>
-      </div>
+<section id="contact">
+  <div class="max contact-grid">
+    <div>
+      <span class="kicker">// <span data-de>KONTAKT</span><span data-en>CONTACT</span></span>
+      <h2 style="font-family:var(--mono);font-weight:700;font-size:clamp(26px,3.6vw,42px);letter-spacing:-.015em;margin:14px 0 16px"><span data-de>Sprich mich an.</span><span data-en>Get in touch.</span></h2>
+      <p style="color:var(--dim);font-size:16px;line-height:1.7"><span data-de>Offen für Junior-/Trainee-Rollen im Penetration Testing und Red Teaming &mdash; remote, EU-weit. Antwort innerhalb von 48 Stunden.</span><span data-en>Open to junior/trainee roles in penetration testing and red teaming &mdash; remote, across the EU. Reply within 48 hours.</span></p>
+      <ul class="contact-list">
+        <li><span class="ic">@</span><a href="mailto:josefbasner@proton.me">josefbasner@proton.me</a></li>
+        <li><span class="ic">☎</span><a href="tel:+4915144957240">+49 151 4495 7240</a></li>
+        <li><span class="ic">◇</span><a href="https://github.com/JBMTP07" target="_blank" rel="noopener">github.com/JBMTP07</a></li>
+        <li><span class="ic">in</span><a href="https://www.linkedin.com/in/josef-basner-23a3173b2/" target="_blank" rel="noopener">linkedin.com/in/josef-basner</a></li>
+        <li><span class="ic">▣</span><span data-de>Deutschland · Remote (EU)</span><span data-en>Germany · Remote (EU)</span></li>
+      </ul>
+      <p class="contact-note"><span data-de>Für sensible Anfragen: PGP-Schlüssel auf Anfrage.</span><span data-en>For sensitive inquiries: PGP key available on request.</span></p>
+    </div>
+    <aside class="cta-card">
+      <span class="kicker">// <span data-de>DIREKT SCHREIBEN</span><span data-en>REACH OUT DIRECTLY</span></span>
+      <h3><span data-de>Passt ein Profil wie meins?</span><span data-en>Does a profile like mine fit?</span></h3>
+      <p><span data-de>Ein Klick &mdash; dein Mail-Client öffnet sich mit vorbereitetem Betreff. Keine Drittanbieter, kein Tracking.</span><span data-en>One click &mdash; your mail client opens with a ready subject line. No third parties, no tracking.</span></p>
+      <a class="btn btn-primary" href="mailto:josefbasner@proton.me?subject=Kontaktaufnahme%20%C2%B7%20Penetration%20Tester"><span data-de>Kontakt aufnehmen</span><span data-en>Get in touch</span></a>
     </aside>
   </div>
 </section>
-
 </main>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-mark sm">JB</span>
-      <span>[JB] Security &mdash; <em>Inh. Josef Roland Basner</em></span>
-    </div>
+<footer>
+  <div class="max footer-inner">
+    <div class="footer-brand"><span class="mk" style="width:30px;height:20px;display:inline-flex;align-items:center;justify-content:center;background:var(--acc)"><b style="background:var(--bg);color:var(--ink);font:700 10px var(--mono);padding:1px 4px">JB</b></span>Josef Roland Basner</div>
     <div class="footer-meta">
-      <a href="impressum.html" data-i18n="footer.impressum">Impressum</a>
+      <a href="impressum.html"><span data-de>Impressum</span><span data-en>Legal notice</span></a>
       <span>·</span>
-      <a href="datenschutz.html" data-i18n="footer.datenschutz">Datenschutz</a>
-      <span>·</span>
-      <span data-i18n="footer.kleinunt">Kleinunternehmer § 19 UStG</span>
+      <a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a>
       <span>·</span>
       <a href="https://github.com/JBMTP07" target="_blank" rel="noopener">github.com/JBMTP07</a>
       <span>·</span>
-      <a href="https://jbmtp07.github.io/" target="_blank" rel="noopener" data-i18n="footer.portfolio">Portfolio</a>
-      <span>·</span>
-      <span data-i18n="footer.year">© 2026</span>
+      <span>© 2026</span>
     </div>
   </div>
 </footer>
 
-<script src="assets/three.min.js"></script>
-<script src="main.js" defer></script>
+<script>
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('prog').style.width=p+'%'});
+const btn=document.getElementById('lang');let lang=localStorage.getItem('jbsec_lang')||'de';
+function setLang(l){lang=l;localStorage.setItem('jbsec_lang',l);document.documentElement.dataset.lang=l;document.documentElement.lang=l;btn.innerHTML=l==='de'?'<b>DE</b> / EN':'DE / <b>EN</b>'}
+btn.onclick=()=>setLang(lang==='de'?'en':'de');
+setLang(lang);
+</script>
 </body>
 </html>
